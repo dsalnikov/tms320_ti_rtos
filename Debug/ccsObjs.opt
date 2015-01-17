@@ -1,0 +1,1 @@
+-l"./configPkg/linker.cmd" "./DSP2802x_DefaultIsr.obj" "./DSP2802x_GlobalVariableDefs.obj" "./DSP2802x_PieCtrl.obj" "./DSP2802x_PieVect.obj" "./DSP2802x_SysCtrl.obj" "./main.obj" "./inc/DSP2802x_CpuTimers.obj" "../DSP2802x_Headers_BIOS.cmd" "../TMS320F28027.cmd" -l"libc.a" 
