@@ -53,7 +53,7 @@ c28_TaskSupport_asm.obj: family/c28/TaskSupport_asm.s28 makefile
 	$(ASSEMBLE) --output_file=c28_TaskSupport_asm.obj
 
 
-BIOS.obj: BIOS.c family/c28/TimestampProvider.c family/c28/Hwi.c family/c28/Timer.c family/c28/TaskSupport.c knl/Clock.c knl/Idle.c knl/Intrinsics.c knl/Queue.c knl/Semaphore.c knl/Swi.c knl/Swi_andn.c knl/Task.c gates/GateHwi.c gates/GateMutex.c hal/Hwi.c hal/Hwi_stack.c hal/Hwi_startup.c makefile
+BIOS.obj: BIOS.c family/c28/TimestampProvider.c family/c28/Hwi.c family/c28/Timer.c family/c28/TaskSupport.c knl/Clock.c knl/Idle.c knl/Intrinsics.c knl/Queue.c knl/Semaphore.c knl/Swi.c knl/Swi_andn.c knl/Task.c hal/Hwi.c hal/Hwi_stack.c hal/Hwi_startup.c gates/GateHwi.c gates/GateMutex.c makefile
 	@-$(call RM, $@)
 	@echo cl28L $< ...
 	@$(CC) $(BIOS_DEFS) $(XOPTS) $(INCS) \
@@ -70,11 +70,11 @@ BIOS.obj: BIOS.c family/c28/TimestampProvider.c family/c28/Hwi.c family/c28/Time
 	$(BIOS_ROOT)knl/Swi.c \
 	$(BIOS_ROOT)knl/Swi_andn.c \
 	$(BIOS_ROOT)knl/Task.c \
-	$(BIOS_ROOT)gates/GateHwi.c \
-	$(BIOS_ROOT)gates/GateMutex.c \
 	$(BIOS_ROOT)hal/Hwi.c \
 	$(BIOS_ROOT)hal/Hwi_stack.c \
 	$(BIOS_ROOT)hal/Hwi_startup.c \
+	$(BIOS_ROOT)gates/GateHwi.c \
+	$(BIOS_ROOT)gates/GateMutex.c \
 
 sysbios.a28L: BIOS.obj c28_Hwi_asm.obj c28_Hwi_disp.obj c28_IntrinsicsSupport_asm.obj c28_TaskSupport_asm.obj
 	@-$(call RM, $@)

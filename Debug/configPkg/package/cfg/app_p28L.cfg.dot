@@ -5,7 +5,7 @@ digraph configuration {
     concentrate=true;
     compound=true;
     label="\nConfiguration for configPkg/app.x28L"
-  node [font=Helvetica, fontsize=14, fontcolor=black];  subgraph cluster0 {label=""; __cfg [label="C:/Users/lamazavr/workspace_v6_0/tms320_ti_rtos/app.cfg", color=white, fontcolor=blue];
+  node [font=Helvetica, fontsize=14, fontcolor=black];  subgraph cluster0 {label=""; __cfg [label="C:/Users/lamazavr/git/tms320_ti_rtos/app.cfg", color=white, fontcolor=blue];
     node [font=Helvetica, fontsize=10];    subgraph cluster1 {
         label="";
         xdc_services_global__top [shape=box,label="xdc.services.global\n1,0,0,0", color=white];
@@ -236,7 +236,7 @@ digraph configuration {
     }
     subgraph cluster26 {
         label="";
-        ti_sysbios_hal__top [shape=box,label="ti.sysbios.hal\n2,0,0,0,1402593404869", color=white];
+        ti_sysbios_hal__top [shape=box,label="ti.sysbios.hal\n2,0,0,0,0", color=white];
         ti_sysbios_hal__bot [shape=point,label="", style=invis];
         ti_sysbios_hal_Hwi [style=filled,fillcolor=lightgray, label="Hwi"];
         ti_sysbios_hal__top -> ti_sysbios_hal_Hwi[style=invis];

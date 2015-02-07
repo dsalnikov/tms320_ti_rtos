@@ -9,8 +9,8 @@
  */
 
 
--l"C:\Users\lamazavr\workspace_v6_0\tms320_ti_rtos\Debug\configPkg\package\cfg\app_p28L.o28L"
--l"C:\Users\lamazavr\workspace_v6_0\tms320_ti_rtos\src\sysbios\sysbios.a28L"
+-l"C:\Users\lamazavr\git\tms320_ti_rtos\Debug\configPkg\package\cfg\app_p28L.o28L"
+-l"C:\Users\lamazavr\git\tms320_ti_rtos\src\sysbios\sysbios.a28L"
 -l"C:\ti\tirtos_c2000_2_10_01_38\products\bios_6_41_00_26\packages\ti\catalog\c2800\init\lib\Boot.a28L"
 -l"C:\ti\tirtos_c2000_2_10_01_38\products\bios_6_41_00_26\packages\ti\targets\rts2800\lib\ti.targets.rts2800.a28L"
 -l"C:\ti\tirtos_c2000_2_10_01_38\products\bios_6_41_00_26\packages\ti\targets\rts2800\lib\boot.a28L"
@@ -84,6 +84,7 @@
 /* Content from xdc.cfg (null): */
 
 /* Content from ti.catalog.c2800.init (ti/catalog/c2800/init/linkcmd.xdt): */
+-u _ti_catalog_c2800_init_Boot_entry
 
 /* Content from ti.platforms.tms320x28 (null): */
 
@@ -112,11 +113,12 @@
  */
 _xdc_runtime_Startup__EXECFXN__C = 1;
 _xdc_runtime_Startup__RESETFXN__C = 1;
-_TSK_idle = _ti_sysbios_knl_Task_Object__table__V + 34;
+_TSK_idle = _ti_sysbios_knl_Task_Object__table__V + 68;
 
 
 SECTIONS
 {
+    .ti_catalog_c2800_init_begin: load > BEGIN
 
 
     xdc.meta: type = COPY

@@ -18,6 +18,8 @@
 extern "C" {
 #endif
 
+#define xdc__strict
+
 #define   TARGET   1
 //---------------------------------------------------------------------------
 // User To Select Target Device:
