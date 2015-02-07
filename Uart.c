@@ -11,12 +11,31 @@
 #include <xdc/cfg/global.h>
 #include <ti/sysbios/knl/Semaphore.h>
 
+#include <ti/sysbios/hal/Timer.h>
+
 // буфер для modbus
 Uint16 UartBuffer[50];
 
 // количество данных в буфере
 Uint16 UartRxLen = 0;
 
+extern Uint16 TestPrm;
+
+#pragma CODE_SECTION(modbus_timer_isr, "ramfuncs");
+void modbus_timer_isr()
+{
+	Uint16 i = 0;
+	if (UartRxLen > 0)
+	{
+		//обработка modbus
+		Uint16 len = modbus_func(UartBuffer, UartRxLen, 2);
+		for (i = 0; i < len; i++)
+		{
+		   Uart_send(UartBuffer[i]);
+		}
+		UartRxLen = 0;
+	}
+}
 
 #pragma CODE_SECTION(uart_rx_hwi, "ramfuncs");
 void uart_rx_hwi(UArg arg)
@@ -33,10 +52,7 @@ void uart_rx_hwi(UArg arg)
 		UartBuffer[UartRxLen++] = SciaRegs.SCIRXBUF.all;
 	}
 
-	Semaphore_post(modbus_sem);
-
-	// сбрасываем таймер
-	//CpuTimer0.RegsAddr->TCR.bit.TRB = 1;
+	Timer_start(modbus_timer);
 
 	SciaRegs.SCIFFRX.bit.RXFFOVRCLR=1;   // Clear Overflow flag
 	SciaRegs.SCIFFRX.bit.RXFFINTCLR=1;   // Clear Interrupt flag

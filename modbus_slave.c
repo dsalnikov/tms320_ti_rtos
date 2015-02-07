@@ -8,26 +8,6 @@
 #include "crc16.h"
 #include "ParametersTable.h"
 
-#include <xdc/cfg/global.h>
-#include <ti/sysbios/knl/Task.h>
-#include <ti/sysbios/knl/Semaphore.h>
-
-extern Uint16 TestPrm;
-
-#pragma CODE_SECTION(modbus_task, "ramfuncs");
-Void modbus_task(UArg a0, UArg a1)
-{
-
-	while(1)
-	{
-		if (Semaphore_pend(modbus_sem,100))
-		{
-			//обработка modbus
-			TestPrm++;
-		}
-	}
-}
-
 Uint16 modbus_func(Uint16 *Buffer, Uint16 len, Uint16 ModbusAddress)
 {
 	Uint16 tmp;

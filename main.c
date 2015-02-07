@@ -22,9 +22,6 @@ Void taskFxn(UArg a0, UArg a1)
 {
 	while(1)
 	{
-	    Uart_send_msg("Helo world!");
-
-
 		if (LedsState & 0x01)
 			GpioDataRegs.GPACLEAR.bit.GPIO0 = 1;
 		else
@@ -45,7 +42,7 @@ Void taskFxn(UArg a0, UArg a1)
 		else
 			GpioDataRegs.GPASET.bit.GPIO3 = 1;
 
-		Task_sleep(1000);
+		Task_sleep(100);
 	}
 }
 
