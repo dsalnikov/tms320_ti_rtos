@@ -11,6 +11,7 @@
 #include <xdc/cfg/global.h>
 
 #include "Uart.h"
+#include "pwm.h"
 
 Uint16 LedsState = 0;
 Uint16 TestPrm = 0;
@@ -22,25 +23,6 @@ Void taskFxn(UArg a0, UArg a1)
 {
 	while(1)
 	{
-		if (LedsState & 0x01)
-			GpioDataRegs.GPACLEAR.bit.GPIO0 = 1;
-		else
-			GpioDataRegs.GPASET.bit.GPIO0 = 1;
-
-		if (LedsState & 0x02)
-			GpioDataRegs.GPACLEAR.bit.GPIO1 = 1;
-		else
-			GpioDataRegs.GPASET.bit.GPIO1 = 1;
-
-		if (LedsState & 0x04)
-			GpioDataRegs.GPACLEAR.bit.GPIO2 = 1;
-		else
-			GpioDataRegs.GPASET.bit.GPIO2 = 1;
-
-		if (LedsState & 0x08)
-			GpioDataRegs.GPACLEAR.bit.GPIO3 = 1;
-		else
-			GpioDataRegs.GPASET.bit.GPIO3 = 1;
 
 		Task_sleep(100);
 	}
@@ -63,22 +45,10 @@ Int main()
 	InitPieCtrl();
 	IER = 0x0000;
 	IFR = 0x0000;
-	//InitPieVectTable();
-
 	EINT;
 
     Uart_init();
-
-
-	// настройка выводов со светодиодами
-	EALLOW; // разрешаем доступ к защищенным регистрам
-	GpioCtrlRegs.GPAMUX1.bit.GPIO0 = 0;
-	GpioCtrlRegs.GPAMUX1.bit.GPIO1 = 0;
-	GpioCtrlRegs.GPAMUX1.bit.GPIO2 = 0;
-	GpioCtrlRegs.GPAMUX1.bit.GPIO3 = 0;
-
-    GpioCtrlRegs.GPADIR.all = 0xFFFFFFFF;   // Все как выход
-    EDIS; // запрещаем доступ к регистрам
+    pwm_init();
 
     BIOS_start();    /* does not return */
     return(0);
