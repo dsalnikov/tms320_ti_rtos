@@ -14,6 +14,9 @@
 #ifndef DSP2802x_ADC_H
 #define DSP2802x_ADC_H
 
+#include "DSP2802x_Device.h"
+
+
 #ifdef __cplusplus
 extern "C" {
 #endif

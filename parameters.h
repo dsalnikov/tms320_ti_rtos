@@ -9,12 +9,14 @@
 #define PARAMETERS_H_
 
 #include "DSP2802x_Device.h"
+#include "system.h"
 
-extern Uint16 LedsState;
-extern Uint16 TestPrm;
+extern System_t system;
 
-#define READ_PARAMETER_FLAG		1
-#define WRITE_PARAMETER_FLAG	2
+enum Parameters_flag {
+	READ_PARAMETER_FLAG	= 1,
+	WRITE_PARAMETER_FLAG = 2
+};
 
 // описатель флагов
 typedef struct {

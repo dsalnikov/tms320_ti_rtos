@@ -12,9 +12,8 @@
 
 #include "Uart.h"
 #include "pwm.h"
+#include "adc.h"
 
-Uint16 LedsState = 0;
-Uint16 TestPrm = 0;
 
 /*
  *  ======== taskFxn ========
@@ -23,7 +22,7 @@ Void taskFxn(UArg a0, UArg a1)
 {
 	while(1)
 	{
-
+		//TODO: generate frequensy setting here
 		Task_sleep(100);
 	}
 }
@@ -47,8 +46,8 @@ Int main()
 	IFR = 0x0000;
 	EINT;
 
-    Uart_init();
-    pwm_init();
+    init_uart();
+    init_adc();
 
     BIOS_start();    /* does not return */
     return(0);

@@ -5,6 +5,7 @@
  *      Author: lamazavr
  */
 
+#include "pwm.h"
 #include "drv8301.h"
 #include "DSP2802x_Examples.h"
 
@@ -13,12 +14,40 @@
 
 Void drv8301_task(UArg a0, UArg a1)
 {
+	DRV_8301_DATA_RESPONSE resp;
+	volatile Uint16 last_fault = 0xFFFF;
+
 	drv8301_init();
-	drv8301_gate_reset();
+	//drv8301_gate_reset();
+	pwm_init();
 
 	while(1)
 	{
 		//TODO: parse for errors of drv8301
+		resp.all = drv8301_send_cmd(__DRV8301_STATUS_REG1, 0, __DRV8301_READ);
+
+		if (resp.bit.f0 == __DRV8301_READ)
+		switch(resp.bit.addr)
+		{
+			case __DRV8301_STATUS_REG1:
+				if (resp.bit.data == 0)
+				{
+					//no errors
+					break;
+				} else {
+					pwm_it_disable();
+					last_fault = resp.bit.data;
+				}
+			break;
+
+			case __DRV8301_STATUS_REG2:
+
+			break;
+
+			default:
+				break;
+		}
+
 		Task_sleep(100);
 	}
 }
@@ -49,20 +78,22 @@ void drv8301_init()
 
 	// устанавливаем EN_GATE
 	__DRV8301_EN_GATE_SET;
-	DELAY_US(10000);
+
+	Task_sleep(1000);
 
 	// настраиваем spi
 	drv8301_spi_init();
 
 	// reset drv8301 to initial state
-	//drv8301_gate_reset();
-	//DELAY_US(10000);
+	drv8301_gate_reset();
+
+	Task_sleep(1000);
 
 	DRV_8301_REG1_DATA reg;
 	reg.all = 0;
 	reg.bit.PWM_MODE = 1;
 	reg.bit.OC_ADJ_SET = 20;
-	reg.bit.OC_MODE = 3;
+	reg.bit.OC_MODE = 0; // current limiting mode
 
 	// set over current report only mode
 	drv8301_send_cmd(0x02, reg.all, __DRV8301_WRITE);

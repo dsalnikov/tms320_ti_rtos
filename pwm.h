@@ -28,6 +28,9 @@ void pwm_debug();
 
 void pwm1_interrupt_init();
 
+void pwm_it_enable();
+void pwm_it_disable();
+
 #pragma CODE_SECTION(epwm1_timer_isr, "ramfuncs");
 interrupt void epwm1_timer_isr();
 

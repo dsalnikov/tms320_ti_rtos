@@ -60,7 +60,7 @@ void uart_rx_hwi(UArg arg)
 	PieCtrlRegs.PIEACK.all = PIEACK_GROUP9;
 }
 
-void Uart_init()
+void init_uart()
 {
 	//EALLOW;
 	//SysCtrlRegs.PCLKCR0.bit.SCIAENCLK = 1;

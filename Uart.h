@@ -16,7 +16,7 @@ extern Uint16 UartRxLen;
 /**
  * Инициализация передатчика
  */
-void Uart_init();
+void init_uart();
 
 /**
  * Инициализация ножек для Uart

@@ -6,6 +6,48 @@
  */
 
 #include "pwm.h"
+#include <math.h>
+#include <xdc/cfg/global.h>
+
+#define M_PI 3.141592
+float64 pwma = 0.0;
+
+Uint16 NominalVoltage = 10;
+float32 Fpwm = 4000.0;
+float32 Fout = 1.0;
+float64 deltaPhase = 0.01f;
+float64 Ta, Tb, Tc;
+Uint16 MaxTimerValue = 0x000A;
+
+#pragma CODE_SECTION(epwm1_hwi, "ramfuncs");
+void epwm1_hwi(UArg arg)
+{
+	pwma += deltaPhase;
+
+	if (pwma >= 2.0*M_PI)
+	{
+		pwma -= 2.0*M_PI;
+	}
+
+	if (Fout > 0)
+	{
+		Ta = (cos(pwma) + 1.0)/2.0;
+		Tb = (cos(pwma + 2.0*M_PI/3.0f) + 1.0)/2.0;
+		Tc = (cos(pwma - 2.0*M_PI/3.0f) + 1.0)/2.0;
+	} else {
+		Ta = Tb = Tc = 0;
+	}
+
+	EPwm1Regs.CMPA.half.CMPA = (Uint16)(Ta * MaxTimerValue);
+	EPwm2Regs.CMPA.half.CMPA = (Uint16)(Tb * MaxTimerValue);
+	EPwm3Regs.CMPA.half.CMPA = (Uint16)(Tc * MaxTimerValue);
+
+	// Clear INT flag for this timer
+	EPwm1Regs.ETCLR.bit.INT = 1;
+
+	// Acknowledge this interrupt to receive more interrupts from group 3
+	PieCtrlRegs.PIEACK.all = PIEACK_GROUP3;
+}
 
 void pwm_gpio_init()
 {
@@ -40,7 +82,7 @@ void pwm_init()
 	pwm3_init();
 
 	//TODO: configure as HWI
-	//pwm1_interrupt_init();
+	pwm1_interrupt_init();
 
 }
 
@@ -123,11 +165,11 @@ void pwm3_init()
 	EPwm3Regs.AQCTLA.bit.CAU = AQ_CLEAR;
 }
 
-#if 0
+
 void pwm1_interrupt_init()
 {
 	EALLOW;  // This is needed to write to EALLOW protected registers
-	PieVectTable.EPWM1_INT = &epwm1_timer_isr;
+	//PieVectTable.EPWM1_INT = &epwm1_timer_isr;
 	EDIS;
 
 	IER |= M_INT3;
@@ -144,5 +186,13 @@ void pwm1_interrupt_init()
 	EPwm1Regs.ETSEL.bit.SOCASEL	= 4;		// Select SOC from from CPMA on upcount
 	EPwm1Regs.ETPS.bit.SOCAPRD 	= 1;		// Generate pulse on 1st event
 }
-#endif
 
+void pwm_it_enable()
+{
+	EPwm1Regs.ETSEL.bit.INTEN = 1;
+}
+
+void pwm_it_disable()
+{
+	EPwm1Regs.ETSEL.bit.INTEN = 0;
+}
