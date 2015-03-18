@@ -14,14 +14,17 @@ float64 pwma = 0.0;
 
 Uint16 NominalVoltage = 10;
 float32 Fpwm = 4000.0;
-float32 Fout = 1.0;
-float64 deltaPhase = 0.01f;
+float32 Fout = 0.0;
+float64 deltaPhase = 0.0f;
 float64 Ta, Tb, Tc;
 Uint16 MaxTimerValue = 0x000A;
+
 
 #pragma CODE_SECTION(epwm1_hwi, "ramfuncs");
 void epwm1_hwi(UArg arg)
 {
+	deltaPhase = 2.0 * M_PI * Fout / Fpwm;
+
 	pwma += deltaPhase;
 
 	if (pwma >= 2.0*M_PI)
@@ -89,7 +92,7 @@ void pwm_init()
 void pwm1_init()
 {
 	// Setup TBCLK
-	EPwm1Regs.TBPRD = 0x00FF;           // Set timer period 801 TBCLKs
+	EPwm1Regs.TBPRD = PWM_TIMER_PRD;		//15000 - 4kHz
 	EPwm1Regs.TBPHS.all = 0x0000;           // Phase is 0
 	EPwm1Regs.TBCTR = 0x0000;                      // Clear counter
 
@@ -116,7 +119,7 @@ void pwm1_init()
 void pwm2_init()
 {
 	// Setup TBCLK
-	EPwm2Regs.TBPRD = 0x00FF;           // Set timer period 801 TBCLKs
+	EPwm2Regs.TBPRD = PWM_TIMER_PRD;           // Set timer period 801 TBCLKs
 	EPwm2Regs.TBPHS.all = 0x0000;           // Phase is 0
 	EPwm2Regs.TBCTR = 0x0000;                      // Clear counter
 
@@ -142,7 +145,7 @@ void pwm2_init()
 void pwm3_init()
 {
 	// Setup TBCLK
-	EPwm3Regs.TBPRD = 0x00FF;           // Set timer period 801 TBCLKs
+	EPwm3Regs.TBPRD = PWM_TIMER_PRD;           // Set timer period 801 TBCLKs
 	EPwm3Regs.TBPHS.all = 0x0000;           // Phase is 0
 	EPwm3Regs.TBCTR = 0x0000;                      // Clear counter
 

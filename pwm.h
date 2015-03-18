@@ -11,6 +11,9 @@
 #include "DSP2802x_Device.h"
 #include "DSP2802x_EPwm_defines.h"
 
+//timer period on 60MHz for 4kHz PWM
+#define PWM_TIMER_PRD 15000
+
 /**
  * Настройка выводов GPIO0-5 как PWM
  */

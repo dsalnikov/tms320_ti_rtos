@@ -92,16 +92,20 @@ void drv8301_init()
 	DRV_8301_REG1_DATA reg;
 	reg.all = 0;
 	reg.bit.PWM_MODE = 1;
-	reg.bit.OC_ADJ_SET = 20;
-	reg.bit.OC_MODE = 0; // current limiting mode
+	// Overcurrent Trip = OC_ADJ_SET / MOSFET RDS(on)
+	// 0.068 / 4.7 mOhm = 14.47A
+	reg.bit.OC_ADJ_SET = 1; //1 is for 0.068 Vds
+	reg.bit.OC_MODE = __DRV8301_OCP_MODE_LIMIT; // current limiting mode
 
-	// set over current report only mode
+	// set over current mode
 	drv8301_send_cmd(0x02, reg.all, __DRV8301_WRITE);
 
 	DRV_8301_REG2_DATA reg2;
 	reg2.all = 0;
 	reg2.bit.OC_TOFF = 1;
-	reg2.bit.GAIN = 3;
+	//Vref=3V3
+	//Vo = Vref/2 - GAIN * (SN - SP);
+	reg2.bit.GAIN = __DRV8301_GAIN_10;
 
 	drv8301_send_cmd(0x03, reg2.all, __DRV8301_WRITE);
 }
