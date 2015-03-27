@@ -13,17 +13,6 @@ extern System_t system;
 
 void init_adc()
 {
-	//chanels map
-	// Ia_FB - B1
-	// Ib_FB - B3
-	// Ic_FB - B7
-
-	// Va_FB - A3
-	// Vb_FB - A1
-	// Vc_FB - A0
-
-	// DC_FB - A7
-
 	InitAdc();
 
 	PieCtrlRegs.PIEIER1.bit.INTx1 = 1;	// Enable INT 1.1 in the PIE
@@ -38,17 +27,45 @@ void init_adc()
 	AdcRegs.INTSEL1N2.bit.INT1CONT  = 0;	//Disable ADCINT1 Continuous mode
 	AdcRegs.INTSEL1N2.bit.INT1SEL	= 1;	//setup EOC1 to trigger ADCINT1 to fire
 
+
 	//current measurements sources
-	AdcRegs.ADCSOC0CTL.bit.CHSEL 	= 0x0B;
-	AdcRegs.ADCSOC1CTL.bit.CHSEL 	= 0x09;
-	AdcRegs.ADCSOC2CTL.bit.CHSEL 	= 0x08;
+	// Ia_FB - B1
+	// Ib_FB - B3
+	// Ic_FB - B7
+	AdcRegs.ADCSOC0CTL.bit.CHSEL 	= 0x09;
+	AdcRegs.ADCSOC1CTL.bit.CHSEL 	= 0x0B;
+	AdcRegs.ADCSOC2CTL.bit.CHSEL 	= 0x0F;
 
-	//TODO: add voltage measurements sources and triggers for them
+	//ADCTRIG6 – ePWM1,ADCSOCB
+	AdcRegs.ADCSOC0CTL.bit.TRIGSEL 	= 6;
+	AdcRegs.ADCSOC1CTL.bit.TRIGSEL 	= 6;
+	AdcRegs.ADCSOC2CTL.bit.TRIGSEL 	= 6;
 
-	AdcRegs.ADCSOC0CTL.bit.TRIGSEL 	= 5;	//set SOC0 start trigger on EPWM1A, due to round-robin SOC0 converts first then SOC1
-	AdcRegs.ADCSOC1CTL.bit.TRIGSEL 	= 5;	//set SOC1 start trigger on EPWM1A, due to round-robin SOC0 converts first then SOC1
-	AdcRegs.ADCSOC0CTL.bit.ACQPS 	= 6;	//set SOC0 S/H Window to 7 ADC Clock Cycles, (6 ACQPS plus 1)
-	AdcRegs.ADCSOC1CTL.bit.ACQPS 	= 6;	//set SOC1 S/H Window to 7 ADC Clock Cycles, (6 ACQPS plus 1)
+
+	//voltage measurements sources and triggers for them
+	// Va_FB - A3
+	// Vb_FB - A1
+	// Vc_FB - A0
+	AdcRegs.ADCSOC3CTL.bit.CHSEL = 0x03;
+	AdcRegs.ADCSOC4CTL.bit.CHSEL = 0x01;
+	AdcRegs.ADCSOC5CTL.bit.CHSEL = 0x00;
+
+	//ADCTRIG5 – ePWM1,ADCSOCA
+	AdcRegs.ADCSOC3CTL.bit.TRIGSEL 	= 5;
+	AdcRegs.ADCSOC4CTL.bit.TRIGSEL 	= 5;
+	AdcRegs.ADCSOC5CTL.bit.TRIGSEL 	= 5;
+
+	// DC_FB - A7
+	AdcRegs.ADCSOC3CTL.bit.CHSEL = 0x07;
+	AdcRegs.ADCSOC3CTL.bit.TRIGSEL 	= 5;
+
+
+	AdcRegs.ADCSOC0CTL.bit.ACQPS = 6;	//set SOC0 S/H Window to 7 ADC Clock Cycles, (6 ACQPS plus 1)
+	AdcRegs.ADCSOC1CTL.bit.ACQPS = 6;	//set SOC1 S/H Window to 7 ADC Clock Cycles, (6 ACQPS plus 1)
+	AdcRegs.ADCSOC2CTL.bit.ACQPS = 6;
+	AdcRegs.ADCSOC3CTL.bit.ACQPS = 6;
+	AdcRegs.ADCSOC4CTL.bit.ACQPS = 6;
+	AdcRegs.ADCSOC5CTL.bit.ACQPS = 6;
 	EDIS;
 
 }
