@@ -27,7 +27,6 @@ void init_adc()
 	AdcRegs.INTSEL1N2.bit.INT1CONT  = 0;	//Disable ADCINT1 Continuous mode
 	AdcRegs.INTSEL1N2.bit.INT1SEL	= 1;	//setup EOC1 to trigger ADCINT1 to fire
 
-
 	//current measurements sources
 	// Ia_FB - B1
 	// Ib_FB - B3
@@ -36,11 +35,10 @@ void init_adc()
 	AdcRegs.ADCSOC1CTL.bit.CHSEL 	= 0x0B;
 	AdcRegs.ADCSOC2CTL.bit.CHSEL 	= 0x0F;
 
-	//ADCTRIG6 – ePWM1,ADCSOCB
-	AdcRegs.ADCSOC0CTL.bit.TRIGSEL 	= 6;
-	AdcRegs.ADCSOC1CTL.bit.TRIGSEL 	= 6;
-	AdcRegs.ADCSOC2CTL.bit.TRIGSEL 	= 6;
-
+	//ADCTRIG5 – ePWM1,ADCSOCA
+	AdcRegs.ADCSOC0CTL.bit.TRIGSEL 	= 5;
+	AdcRegs.ADCSOC1CTL.bit.TRIGSEL 	= 5;
+	AdcRegs.ADCSOC2CTL.bit.TRIGSEL 	= 5;
 
 	//voltage measurements sources and triggers for them
 	// Va_FB - A3
@@ -50,22 +48,23 @@ void init_adc()
 	AdcRegs.ADCSOC4CTL.bit.CHSEL = 0x01;
 	AdcRegs.ADCSOC5CTL.bit.CHSEL = 0x00;
 
-	//ADCTRIG5 – ePWM1,ADCSOCA
 	AdcRegs.ADCSOC3CTL.bit.TRIGSEL 	= 5;
 	AdcRegs.ADCSOC4CTL.bit.TRIGSEL 	= 5;
 	AdcRegs.ADCSOC5CTL.bit.TRIGSEL 	= 5;
 
 	// DC_FB - A7
-	AdcRegs.ADCSOC3CTL.bit.CHSEL = 0x07;
-	AdcRegs.ADCSOC3CTL.bit.TRIGSEL 	= 5;
+	AdcRegs.ADCSOC6CTL.bit.CHSEL = 0x07;
+	AdcRegs.ADCSOC6CTL.bit.TRIGSEL 	= 5;
 
-
-	AdcRegs.ADCSOC0CTL.bit.ACQPS = 6;	//set SOC0 S/H Window to 7 ADC Clock Cycles, (6 ACQPS plus 1)
-	AdcRegs.ADCSOC1CTL.bit.ACQPS = 6;	//set SOC1 S/H Window to 7 ADC Clock Cycles, (6 ACQPS plus 1)
+	//set SOCs S/H Window to 7 ADC Clock Cycles, (6 ACQPS plus 1)
+	AdcRegs.ADCSOC0CTL.bit.ACQPS = 6;
+	AdcRegs.ADCSOC1CTL.bit.ACQPS = 6;
 	AdcRegs.ADCSOC2CTL.bit.ACQPS = 6;
 	AdcRegs.ADCSOC3CTL.bit.ACQPS = 6;
 	AdcRegs.ADCSOC4CTL.bit.ACQPS = 6;
 	AdcRegs.ADCSOC5CTL.bit.ACQPS = 6;
+	AdcRegs.ADCSOC6CTL.bit.ACQPS = 6;
+
 	EDIS;
 
 }
@@ -74,8 +73,15 @@ void init_adc()
 void adc_isr(UArg arg)
 {
 	//TODO: create some filter here
-	system.voltage.PhaseA = AdcResult.ADCRESULT0;
-	system.voltage.PhaseB = AdcResult.ADCRESULT1;
+	system.current.PhaseA = AdcResult.ADCRESULT0;
+	system.current.PhaseB = AdcResult.ADCRESULT1;
+	system.current.PhaseC = AdcResult.ADCRESULT2;
+
+	system.voltage.PhaseA = AdcResult.ADCRESULT3;
+	system.voltage.PhaseB = AdcResult.ADCRESULT4;
+	system.voltage.PhaseC = AdcResult.ADCRESULT5;
+
+	system.InputVoltage = AdcResult.ADCRESULT6;
 
 	AdcRegs.ADCINTFLGCLR.bit.ADCINT1 = 1;		//Clear ADCINT1 flag reinitialize for next SOC
 	PieCtrlRegs.PIEACK.all = PIEACK_GROUP1;   // Acknowledge interrupt to PIE

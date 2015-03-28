@@ -116,6 +116,18 @@ void pwm1_init()
 
 }
 
+void pwm1_dead_band_configure()
+{
+	EPwm1Regs.DBCTL.bit.IN_MODE = 0;
+	EPwm1Regs.DBCTL.bit.POLSEL = 0x02; //active high complementary
+	EPwm1Regs.DBCTL.bit.OUT_MODE = 3; //enabled for both
+
+	//dead band - 0.1us
+	EPwm1Regs.DBFED = 5;
+	EPwm1Regs.DBRED = 5;
+}
+
+
 void pwm2_init()
 {
 	// Setup TBCLK

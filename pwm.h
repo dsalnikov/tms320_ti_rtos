@@ -25,6 +25,8 @@ void pwm1_init();
 void pwm2_init();
 void pwm3_init();
 
+void pwm1_dead_band_configure();
+
 static volatile Uint16 duty = 0;
 
 void pwm_debug();
