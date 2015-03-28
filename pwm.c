@@ -23,7 +23,8 @@ Uint16 MaxTimerValue = 0x000A;
 #pragma CODE_SECTION(epwm1_hwi, "ramfuncs");
 void epwm1_hwi(UArg arg)
 {
-	deltaPhase = 2.0 * M_PI * Fout / Fpwm;
+	EPwm1Regs.CMPA.half.CMPA = PWM_TIMER_PRD/2;
+	/*deltaPhase = 2.0 * M_PI * Fout / Fpwm;
 
 	pwma += deltaPhase;
 
@@ -44,7 +45,7 @@ void epwm1_hwi(UArg arg)
 	EPwm1Regs.CMPA.half.CMPA = (Uint16)(Ta * MaxTimerValue);
 	EPwm2Regs.CMPA.half.CMPA = (Uint16)(Tb * MaxTimerValue);
 	EPwm3Regs.CMPA.half.CMPA = (Uint16)(Tc * MaxTimerValue);
-
+*/
 	// Clear INT flag for this timer
 	EPwm1Regs.ETCLR.bit.INT = 1;
 
@@ -81,6 +82,7 @@ void pwm_init()
 	pwm_gpio_init();
 
 	pwm1_init();
+	pwm1_dead_band_configure();
 	pwm2_init();
 	pwm3_init();
 
@@ -125,6 +127,13 @@ void pwm1_dead_band_configure()
 	//dead band - 0.1us
 	EPwm1Regs.DBFED = 5;
 	EPwm1Regs.DBRED = 5;
+}
+
+void pwm1_disable()
+{
+	EPwm1Regs.CMPA.half.CMPA = 0;
+	EPwm1Regs.CMPB = 0;
+	EPwm1Regs.DBCTL.bit.IN_MODE = 1;
 }
 
 
