@@ -18,6 +18,7 @@ typedef struct {
 
 typedef struct {
 	Uint16 FreqSetting;
+	Uint16 VoltageSetting;
 	Uint16 Status;
 	Uint16 LastFault;
 	Uint16 InputVoltage;
@@ -25,5 +26,6 @@ typedef struct {
 	ThreePhase_t voltage;
 } System_t;
 
+extern System_t system;
 
 #endif /* SYSTEM_H_ */

@@ -93,7 +93,7 @@ C:/ti/xdctools_3_30_03_47_core/packages/xdc/tools/configuro/template/package.xs.
 package.mak: C:/ti/xdctools_3_30_03_47_core/packages/xdc/tools/configuro/template/package.xs.xdt
 endif
 
-ti.targets.C28_large.rootDir ?= c:/ti/ccsv6/tools/compiler/c2000_6.2.7
+ti.targets.C28_large.rootDir ?= C:/ti/ccsv6/tools/compiler/ti-cgt-c2000_6.4.6
 ti.targets.packageBase ?= C:/ti/tirtos_c2000_2_10_01_38/products/bios_6_41_00_26/packages/ti/targets/
 .PRECIOUS: $(XDCCFGDIR)/%.o28L
 .PHONY: all,28L .dlls,28L .executables,28L test,28L

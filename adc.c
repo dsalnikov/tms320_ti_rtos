@@ -69,7 +69,6 @@ void init_adc()
 
 }
 
-#pragma CODE_SECTION(adc_isr, "ramfuncs");
 void adc_isr(UArg arg)
 {
 	//TODO: create some filter here

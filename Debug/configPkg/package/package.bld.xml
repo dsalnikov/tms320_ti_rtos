@@ -7,7 +7,7 @@
         <srcFile name="package/cfg/app_p28L.c"/>
     </sources>
     <configscripts>
-        <srcFile name="C:/Users/lamazavr/git/tms320_ti_rtos/app.cfg"/>
+        <srcFile name="C:/Documents and Settings/salnikov/workspace_v6_1/tms320_ti_rtos/app.cfg"/>
     </configscripts>
     <makefiles>
         <srcFile name="package.mak" src="package.bld"/>
@@ -20,12 +20,12 @@
     </makefiles>
     <targets>
         <target name="ti.targets.C28_large"
-            version="ti.targets.C28_large{1,0,6.2,7"
-            rawVersion="6.2.7"
+            version="ti.targets.C28_large{1,0,6.4,6"
+            rawVersion="6.4.6"
             platform="ti.platforms.sim28xx"
             isa="28"
             suffix="28L"
-            rootDir="c:/ti/ccsv6/tools/compiler/c2000_6.2.7"
+            rootDir="C:/ti/ccsv6/tools/compiler/ti-cgt-c2000_6.4.6"
             os="undefined"
             rts="ti.targets.rts2800">
             <model endian="little"
@@ -44,7 +44,7 @@
         isPartial="false"
         xCfgScript="package/cfg/app_p28L.cfg"
         xCfgPrefix="package/cfg/app_p28L"
-        cfgScript="C:/Users/lamazavr/git/tms320_ti_rtos/app.cfg"
+        cfgScript="C:/Documents and Settings/salnikov/workspace_v6_1/tms320_ti_rtos/app.cfg"
         cfgArgs="null"
         />
     </configurations>
@@ -56,7 +56,7 @@
         profile="release"
         xCfgScript="package/cfg/app_p28L.cfg"
         xCfgPrefix="package/cfg/app_p28L"
-        cfgScript="C:/Users/lamazavr/git/tms320_ti_rtos/app.cfg"
+        cfgScript="C:/Documents and Settings/salnikov/workspace_v6_1/tms320_ti_rtos/app.cfg"
         cfgArgs="null"
         />
     </executables>

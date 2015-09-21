@@ -21,7 +21,6 @@ Uint16 UartRxLen = 0;
 
 extern Uint16 TestPrm;
 
-#pragma CODE_SECTION(modbus_timer_isr, "ramfuncs");
 void modbus_timer_isr()
 {
 	Uint16 i = 0;
@@ -37,7 +36,6 @@ void modbus_timer_isr()
 	}
 }
 
-#pragma CODE_SECTION(uart_rx_hwi, "ramfuncs");
 void uart_rx_hwi(UArg arg)
 {
 	int i;

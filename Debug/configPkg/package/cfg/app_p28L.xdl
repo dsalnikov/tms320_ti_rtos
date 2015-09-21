@@ -9,8 +9,8 @@
  */
 
 
--l"C:\Users\lamazavr\git\tms320_ti_rtos\Debug\configPkg\package\cfg\app_p28L.o28L"
--l"C:\Users\lamazavr\git\tms320_ti_rtos\src\sysbios\sysbios.a28L"
+-l"C:\Documents and Settings\salnikov\workspace_v6_1\tms320_ti_rtos\Debug\configPkg\package\cfg\app_p28L.o28L"
+-l"C:\Documents and Settings\salnikov\workspace_v6_1\tms320_ti_rtos\src\sysbios\sysbios.a28L"
 -l"C:\ti\tirtos_c2000_2_10_01_38\products\bios_6_41_00_26\packages\ti\catalog\c2800\init\lib\Boot.a28L"
 -l"C:\ti\tirtos_c2000_2_10_01_38\products\bios_6_41_00_26\packages\ti\targets\rts2800\lib\ti.targets.rts2800.a28L"
 -l"C:\ti\tirtos_c2000_2_10_01_38\products\bios_6_41_00_26\packages\ti\targets\rts2800\lib\boot.a28L"
@@ -75,6 +75,8 @@
 
 /* Content from xdc.runtime.knl (null): */
 
+/* Content from xdc.services.io (null): */
+
 /* Content from ti.catalog.c2800 (null): */
 
 /* Content from ti.catalog (null): */
@@ -103,8 +105,6 @@
 /* Content from ti.sysbios.utils (null): */
 
 /* Content from configPkg (null): */
-
-/* Content from xdc.services.io (null): */
 
 
 

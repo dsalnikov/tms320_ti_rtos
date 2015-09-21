@@ -3,7 +3,7 @@
 #  package.bld.  Any modifications to this file will be 
 #  overwritten whenever makefiles are re-generated.
 #
-#  target compatibility key = ti.targets.C28_large{1,0,6.2,7
+#  target compatibility key = ti.targets.C28_large{1,0,6.4,6
 #
 app.x28L: package/cfg/app.x28L.mak
 

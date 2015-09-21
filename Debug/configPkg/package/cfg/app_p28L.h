@@ -11,13 +11,22 @@
 extern const ti_sysbios_knl_Task_Handle task0;
 
 #include <ti/sysbios/hal/Hwi.h>
-extern const ti_sysbios_hal_Hwi_Handle UartRxHwiHandler;
-
-#include <ti/sysbios/knl/Task.h>
-extern const ti_sysbios_knl_Task_Handle ModbusTask;
+extern const ti_sysbios_hal_Hwi_Handle uart_rx_hwi_handle;
 
 #include <ti/sysbios/knl/Semaphore.h>
 extern const ti_sysbios_knl_Semaphore_Handle modbus_sem;
+
+#include <ti/sysbios/hal/Timer.h>
+extern const ti_sysbios_hal_Timer_Handle modbus_timer;
+
+#include <ti/sysbios/knl/Task.h>
+extern const ti_sysbios_knl_Task_Handle drv8301_task_handle;
+
+#include <ti/sysbios/hal/Hwi.h>
+extern const ti_sysbios_hal_Hwi_Handle epwm1_hwi_handle;
+
+#include <ti/sysbios/hal/Hwi.h>
+extern const ti_sysbios_hal_Hwi_Handle adc_hwi_handle;
 
 extern int xdc_runtime_Startup__EXECFXN__C;
 

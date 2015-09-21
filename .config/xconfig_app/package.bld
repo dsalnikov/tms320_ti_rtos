@@ -11,7 +11,7 @@ var makeAssembly = false;
 var Executable = xdc.module('xdc.bld.Executable');
 
 var exeOpts = new Executable.Attrs({
-        cfgScript: 'C:/Users/lamazavr/git/tms320_ti_rtos/app.cfg',
+        cfgScript: 'C:/Documents and Settings/salnikov/workspace_v6_1/tms320_ti_rtos/app.cfg',
         profile: 'release',
         cfgHome: 'xconfig_app',
 });
@@ -40,8 +40,8 @@ else {
 }
 
 var thisObj = {
-    cfg:        'C:/Users/lamazavr/git/tms320_ti_rtos/app.cfg',
-    outputPath: 'C:/Users/lamazavr/git/tms320_ti_rtos/.config/xconfig_app',
+    cfg:        'C:/Documents and Settings/salnikov/workspace_v6_1/tms320_ti_rtos/app.cfg',
+    outputPath: 'C:/Documents and Settings/salnikov/workspace_v6_1/tms320_ti_rtos/.config/xconfig_app',
     exeName:    'app' + suffix,
     exeIntName: 'app' + suffix.replace('.', '_'),
     targ:       targ,

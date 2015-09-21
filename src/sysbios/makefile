@@ -1,12 +1,12 @@
 
-XOPTS = -I"c:/ti/xdctools_3_30_03_47_core/packages/" -Dxdc_target_types__=C:/ti/tirtos_c2000_2_10_01_38/products/bios_6_41_00_26/packages/ti/targets/std.h -Dxdc_target_name__=C28_large
+XOPTS = -I"C:/ti/xdctools_3_30_03_47_core/packages/" -Dxdc_target_types__=C:/ti/tirtos_c2000_2_10_01_38/products/bios_6_41_00_26/packages/ti/targets/std.h -Dxdc_target_name__=C28_large
 
 vpath % C:/ti/tirtos_c2000_2_10_01_38/products/bios_6_41_00_26/packages/ti/sysbios/
-vpath %.c c:/ti/xdctools_3_30_03_47_core/packages/
+vpath %.c C:/ti/xdctools_3_30_03_47_core/packages/
 
 CCOPTS    = -v28 -DLARGE_MODEL=1 -ml -q -mo  --program_level_compile -o3 -g --optimize_with_debug  -Dti_sysbios_family_c28_Hwi_zeroLatencyIERMask__D=0U
 
-XDC_ROOT  = c:/ti/xdctools_3_30_03_47_core/packages/
+XDC_ROOT  = C:/ti/xdctools_3_30_03_47_core/packages/
 
 BIOS_ROOT = C:/ti/tirtos_c2000_2_10_01_38/products/bios_6_41_00_26/packages/ti/sysbios/
 
@@ -18,9 +18,9 @@ TARGET_INC = -I"C:/ti/tirtos_c2000_2_10_01_38/products/bios_6_41_00_26/packages/
 
 INCS = $(BIOS_INC) $(TARGET_INC)  
 
-CC = c:/ti/ccsv6/tools/compiler/c2000_6.2.7/bin/cl2000 -c $(CCOPTS) -I c:/ti/ccsv6/tools/compiler/c2000_6.2.7/include
-ASM = c:/ti/ccsv6/tools/compiler/c2000_6.2.7/bin/cl2000 -c $(CCOPTS) -I c:/ti/ccsv6/tools/compiler/c2000_6.2.7/include
-AR = c:/ti/ccsv6/tools/compiler/c2000_6.2.7/bin/ar2000 rq
+CC = C:/ti/ccsv6/tools/compiler/ti-cgt-c2000_6.4.6/bin/cl2000 -c $(CCOPTS) -I C:/ti/ccsv6/tools/compiler/ti-cgt-c2000_6.4.6/include
+ASM = C:/ti/ccsv6/tools/compiler/ti-cgt-c2000_6.4.6/bin/cl2000 -c $(CCOPTS) -I C:/ti/ccsv6/tools/compiler/ti-cgt-c2000_6.4.6/include
+AR = C:/ti/ccsv6/tools/compiler/ti-cgt-c2000_6.4.6/bin/ar2000 rq
 
 DEL = cmd.exe /q /c del /f
 CP = cmd.exe /q /c copy /Y
@@ -53,7 +53,7 @@ c28_TaskSupport_asm.obj: family/c28/TaskSupport_asm.s28 makefile
 	$(ASSEMBLE) --output_file=c28_TaskSupport_asm.obj
 
 
-BIOS.obj: BIOS.c family/c28/TimestampProvider.c family/c28/Hwi.c family/c28/Timer.c family/c28/TaskSupport.c knl/Clock.c knl/Idle.c knl/Intrinsics.c knl/Queue.c knl/Semaphore.c knl/Swi.c knl/Swi_andn.c knl/Task.c hal/Hwi.c hal/Hwi_stack.c hal/Hwi_startup.c gates/GateHwi.c gates/GateMutex.c makefile
+BIOS.obj: BIOS.c family/c28/TimestampProvider.c family/c28/Hwi.c family/c28/Timer.c family/c28/TaskSupport.c knl/Clock.c knl/Idle.c knl/Intrinsics.c knl/Queue.c knl/Semaphore.c knl/Swi.c knl/Swi_andn.c knl/Task.c hal/Hwi.c hal/Hwi_stack.c hal/Hwi_startup.c hal/Timer.c gates/GateHwi.c gates/GateMutex.c makefile
 	@-$(call RM, $@)
 	@echo cl28L $< ...
 	@$(CC) $(BIOS_DEFS) $(XOPTS) $(INCS) \
@@ -73,6 +73,7 @@ BIOS.obj: BIOS.c family/c28/TimestampProvider.c family/c28/Hwi.c family/c28/Time
 	$(BIOS_ROOT)hal/Hwi.c \
 	$(BIOS_ROOT)hal/Hwi_stack.c \
 	$(BIOS_ROOT)hal/Hwi_startup.c \
+	$(BIOS_ROOT)hal/Timer.c \
 	$(BIOS_ROOT)gates/GateHwi.c \
 	$(BIOS_ROOT)gates/GateMutex.c \
 

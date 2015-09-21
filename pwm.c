@@ -9,6 +9,8 @@
 #include <math.h>
 #include <xdc/cfg/global.h>
 
+#include "scalar.h"
+
 #define M_PI 3.141592
 float64 pwma = 0.0;
 
@@ -20,29 +22,14 @@ float64 Ta, Tb, Tc;
 Uint16 MaxTimerValue = 0x000A;
 
 
-#pragma CODE_SECTION(epwm1_hwi, "ramfuncs");
+pwm_t pwm;
+
 void epwm1_hwi(UArg arg)
 {
-	EPwm1Regs.CMPA.half.CMPA = PWM_TIMER_PRD/2;
-	/*deltaPhase = 2.0 * M_PI * Fout / Fpwm;
+	ScalarControl();
 
-	pwma += deltaPhase;
-
-	if (pwma >= 2.0*M_PI)
-	{
-		pwma -= 2.0*M_PI;
-	}
-
-	if (Fout > 0)
-	{
-		Ta = (cos(pwma) + 1.0)/2.0;
-		Tb = (cos(pwma + 2.0*M_PI/3.0f) + 1.0)/2.0;
-		Tc = (cos(pwma - 2.0*M_PI/3.0f) + 1.0)/2.0;
-	} else {
-		Ta = Tb = Tc = 0;
-	}
-
-	EPwm1Regs.CMPA.half.CMPA = (Uint16)(Ta * MaxTimerValue);
+/*
+  	EPwm1Regs.CMPA.half.CMPA = (Uint16)(Ta * MaxTimerValue);
 	EPwm2Regs.CMPA.half.CMPA = (Uint16)(Tb * MaxTimerValue);
 	EPwm3Regs.CMPA.half.CMPA = (Uint16)(Tc * MaxTimerValue);
 */
@@ -76,10 +63,22 @@ void pwm_gpio_init()
 	EDIS;
 }
 
+#define SYSTEM_FREQ_HZ 60000000
+#define F_REF 50
+
+#define PWM_FREQ 4000
+
 void pwm_init()
 {
 	// настраиваем GPIO для ШИМ
 	pwm_gpio_init();
+
+	pwm.pwm_freq = PWM_FREQ;
+	pwm.pwm_period = _IQ(1.0)/pwm.pwm_freq;
+	pwm.pwm_counter_max = SYSTEM_FREQ_HZ / PWM_FREQ;
+
+	pwm.angle = _IQ(0);
+	pwm.angle_step = _IQmpy(_IQ(F_REF), pwm.pwm_period);
 
 	pwm1_init();
 	pwm1_dead_band_configure();
@@ -94,7 +93,7 @@ void pwm_init()
 void pwm1_init()
 {
 	// Setup TBCLK
-	EPwm1Regs.TBPRD = PWM_TIMER_PRD;		//15000 - 4kHz
+	EPwm1Regs.TBPRD = pwm.pwm_counter_max;		//15000 - 4kHz
 	EPwm1Regs.TBPHS.all = 0x0000;           // Phase is 0
 	EPwm1Regs.TBCTR = 0x0000;                      // Clear counter
 
@@ -107,6 +106,7 @@ void pwm1_init()
 	EPwm1Regs.TBCTL.bit.PHSEN = TB_DISABLE;        // выключаем фазовый сдвиг
 	EPwm1Regs.TBCTL.bit.HSPCLKDIV = TB_DIV1;       // делитель 1
 	EPwm1Regs.TBCTL.bit.CLKDIV = TB_DIV1;
+	EPwm1Regs.TBCTL.bit.SYNCOSEL = TB_CTR_ZERO;
 
 	// Setup shadowing
 	EPwm1Regs.CMPCTL.bit.SHDWAMODE = CC_SHADOW;
@@ -140,7 +140,7 @@ void pwm1_disable()
 void pwm2_init()
 {
 	// Setup TBCLK
-	EPwm2Regs.TBPRD = PWM_TIMER_PRD;           // Set timer period 801 TBCLKs
+	EPwm2Regs.TBPRD = pwm.pwm_counter_max;           // Set timer period 801 TBCLKs
 	EPwm2Regs.TBPHS.all = 0x0000;           // Phase is 0
 	EPwm2Regs.TBCTR = 0x0000;                      // Clear counter
 
@@ -153,6 +153,7 @@ void pwm2_init()
 	EPwm2Regs.TBCTL.bit.PHSEN = TB_DISABLE;        // выключаем фазовый сдвиг
 	EPwm2Regs.TBCTL.bit.HSPCLKDIV = TB_DIV1;       // делитель 1
 	EPwm2Regs.TBCTL.bit.CLKDIV = TB_DIV1;
+	EPwm1Regs.TBCTL.bit.SYNCOSEL = TB_SYNC_IN;
 
 	// Setup shadowing
 	EPwm2Regs.CMPCTL.bit.SHDWAMODE = CC_SHADOW;
@@ -166,7 +167,7 @@ void pwm2_init()
 void pwm3_init()
 {
 	// Setup TBCLK
-	EPwm3Regs.TBPRD = PWM_TIMER_PRD;           // Set timer period 801 TBCLKs
+	EPwm3Regs.TBPRD = pwm.pwm_counter_max;           // Set timer period 801 TBCLKs
 	EPwm3Regs.TBPHS.all = 0x0000;           // Phase is 0
 	EPwm3Regs.TBCTR = 0x0000;                      // Clear counter
 
@@ -179,6 +180,7 @@ void pwm3_init()
 	EPwm3Regs.TBCTL.bit.PHSEN = TB_DISABLE;        // выключаем фазовый сдвиг
 	EPwm3Regs.TBCTL.bit.HSPCLKDIV = TB_DIV1;       // делитель 1
 	EPwm3Regs.TBCTL.bit.CLKDIV = TB_DIV1;
+	EPwm1Regs.TBCTL.bit.SYNCOSEL = TB_SYNC_IN;
 
 	// Setup shadowing
 	EPwm3Regs.CMPCTL.bit.SHDWAMODE = CC_SHADOW;

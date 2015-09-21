@@ -11,6 +11,8 @@
 #include "DSP2802x_Device.h"
 #include "DSP2802x_EPwm_defines.h"
 
+#include "iqmath/include/IQmathLib.h"
+
 //timer period on 60MHz for 4kHz PWM
 #define PWM_TIMER_PRD 15000
 
@@ -36,7 +38,18 @@ void pwm1_interrupt_init();
 void pwm_it_enable();
 void pwm_it_disable();
 
-#pragma CODE_SECTION(epwm1_timer_isr, "ramfuncs");
 interrupt void epwm1_timer_isr();
+
+typedef struct {
+	Uint16 pwm_freq;
+	_iq pwm_period;
+	Uint16 pwm_counter_max;
+
+	_iq angle_step;
+	_iq angle;
+} pwm_t;
+
+extern pwm_t pwm;
+
 
 #endif /* PWM_H_ */

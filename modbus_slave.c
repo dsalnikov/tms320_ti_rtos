@@ -8,11 +8,6 @@
 #include "crc16.h"
 #include "ParametersTable.h"
 
-#pragma CODE_SECTION(modbus_func, "ramfuncs");
-#pragma CODE_SECTION(modbus_0x03_func, "ramfuncs");
-#pragma CODE_SECTION(modbus_0x06_func, "ramfuncs");
-
-
 Uint16 modbus_func(Uint16 *Buffer, Uint16 len, Uint16 ModbusAddress)
 {
 	Uint16 tmp;
