@@ -5,12 +5,14 @@
  *      Author: lamazavr
  */
 
+#include "adc.h"
 #include "pwm.h"
 #include "drv8301.h"
 #include "DSP2802x_Examples.h"
 
 #include <ti/sysbios/knl/Task.h>
 #include <xdc/cfg/global.h>
+#include <ti/sysbios/knl/Semaphore.h>
 
 Void drv8301_task(UArg a0, UArg a1)
 {
@@ -23,6 +25,12 @@ Void drv8301_task(UArg a0, UArg a1)
 
 	while(1)
 	{
+		//ждем окончания периода выходного напряжения
+		Semaphore_pend(calculate_rms_sem, 2000);
+
+		calculate_rms();
+
+
 		//TODO: parse for errors of drv8301
 		resp.all = drv8301_send_cmd(__DRV8301_STATUS_REG1, 0, __DRV8301_READ);
 
@@ -48,7 +56,6 @@ Void drv8301_task(UArg a0, UArg a1)
 				break;
 		}
 
-		Task_sleep(100);
 	}
 }
 

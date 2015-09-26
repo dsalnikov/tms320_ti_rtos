@@ -23,6 +23,7 @@ pwm.obj: C:/Documents\ and\ Settings/salnikov/workspace_v6_1/tms320_ti_rtos/DSP2
 pwm.obj: C:/Documents\ and\ Settings/salnikov/workspace_v6_1/tms320_ti_rtos/DSP2802x/inc/DSP2802x_EPwm_defines.h
 pwm.obj: ../iqmath/include/IQmathLib.h
 pwm.obj: C:/ti/ccsv6/tools/compiler/ti-cgt-c2000_6.4.6/include/limits.h
+pwm.obj: ../system.h
 pwm.obj: C:/ti/ccsv6/tools/compiler/ti-cgt-c2000_6.4.6/include/math.h
 pwm.obj: C:/ti/ccsv6/tools/compiler/ti-cgt-c2000_6.4.6/include/linkage.h
 pwm.obj: C:/ti/xdctools_3_30_03_47_core/packages/xdc/cfg/global.h
@@ -213,7 +214,10 @@ pwm.obj: C:/ti/tirtos_c2000_2_10_01_38/products/bios_6_41_00_26/packages/ti/sysb
 pwm.obj: C:/ti/tirtos_c2000_2_10_01_38/products/bios_6_41_00_26/packages/ti/sysbios/knl/Task.h
 pwm.obj: C:/ti/tirtos_c2000_2_10_01_38/products/bios_6_41_00_26/packages/ti/sysbios/hal/Hwi.h
 pwm.obj: C:/ti/tirtos_c2000_2_10_01_38/products/bios_6_41_00_26/packages/ti/sysbios/hal/Hwi.h
+pwm.obj: C:/ti/tirtos_c2000_2_10_01_38/products/bios_6_41_00_26/packages/ti/sysbios/knl/Semaphore.h
 pwm.obj: ../scalar.h
+pwm.obj: ../svgen_dq.h
+pwm.obj: ../fails_control.h
 
 ../pwm.c: 
 ../pwm.h: 
@@ -238,6 +242,7 @@ C:/Documents\ and\ Settings/salnikov/workspace_v6_1/tms320_ti_rtos/DSP2802x/inc/
 C:/Documents\ and\ Settings/salnikov/workspace_v6_1/tms320_ti_rtos/DSP2802x/inc/DSP2802x_EPwm_defines.h: 
 ../iqmath/include/IQmathLib.h: 
 C:/ti/ccsv6/tools/compiler/ti-cgt-c2000_6.4.6/include/limits.h: 
+../system.h: 
 C:/ti/ccsv6/tools/compiler/ti-cgt-c2000_6.4.6/include/math.h: 
 C:/ti/ccsv6/tools/compiler/ti-cgt-c2000_6.4.6/include/linkage.h: 
 C:/ti/xdctools_3_30_03_47_core/packages/xdc/cfg/global.h: 
@@ -428,4 +433,7 @@ C:/ti/tirtos_c2000_2_10_01_38/products/bios_6_41_00_26/packages/ti/sysbios/hal/p
 C:/ti/tirtos_c2000_2_10_01_38/products/bios_6_41_00_26/packages/ti/sysbios/knl/Task.h: 
 C:/ti/tirtos_c2000_2_10_01_38/products/bios_6_41_00_26/packages/ti/sysbios/hal/Hwi.h: 
 C:/ti/tirtos_c2000_2_10_01_38/products/bios_6_41_00_26/packages/ti/sysbios/hal/Hwi.h: 
+C:/ti/tirtos_c2000_2_10_01_38/products/bios_6_41_00_26/packages/ti/sysbios/knl/Semaphore.h: 
 ../scalar.h: 
+../svgen_dq.h: 
+../fails_control.h: 

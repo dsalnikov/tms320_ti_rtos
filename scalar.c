@@ -1,7 +1,5 @@
 #include "scalar.h"
-#include "svgen_dq.h"
 #include "system.h"
-#include "pwm.h"
 
 SVGENDQ svgen_dq = SVGENDQ_DEFAULTS;
 
@@ -11,8 +9,12 @@ void ScalarControl(void)
 	_iq Ds, Udc, angle;
 	_iq sin, cos;
 
-	Udc = system.InputVoltage;
-	Ds = _IQdiv(_IQmpy(system.VoltageSetting, _IQ(K_MOD_SPACEPWM)), Udc);
+	Udc = _IQ(20.0); //system.Udc;
+	Ds = _IQdiv(_IQmpy(system.Uref, _IQ(K_MOD_SPACEPWM)), Udc);
+	if (Ds > _IQ(0.98))
+		Ds = _IQ(0.98);
+
+	system.Uout = _IQmpy( _IQmpy(Udc, Ds), _IQ(1/K_MOD_SPACEPWM));
 
 	angle = pwm.angle;
 	angle += pwm.angle_step;
@@ -20,6 +22,7 @@ void ScalarControl(void)
 	if (angle >= _IQ(1.0))
 	{
 		angle -= _IQ(1.0);
+		pwm.period_out = 1;
 	}
 	pwm.angle = angle;
 
@@ -73,4 +76,42 @@ void ScalarControl(void)
     v->Tb = (s16)_IQtoIQ15(svgen_dq.Tb);
 */
 #endif
+}
+
+void rate_generator()
+{
+	static _iq time = 0;
+	_iq f;
+
+	if (system.state == running_state)
+	{
+		if (time < system.Tacc)
+		{
+			f = _IQmpy(_IQdiv(system.Fref, system.Tacc), time);
+			system.Fout = f;
+			time += pwm.pwm_period;
+
+			uf_characteristics();
+
+			pwm.angle_step = _IQmpy(system.Fout, pwm.pwm_period);
+		}
+		else
+		{
+			system.Fout = system.uf.F[1];
+			system.Uref = system.uf.U[1];
+		}
+	}
+	else if (system.state == ready_state)
+	{
+		time = 0;
+		system.Fout = system.uf.F[0];
+		system.Uref = system.uf.U[0];
+	}
+}
+
+
+
+void uf_characteristics()
+{
+	system.Uref = _IQmpy(_IQdiv(system.uf.U[1] - system.uf.U[0], system.uf.F[1] - system.uf.F[0]), system.Fout);
 }

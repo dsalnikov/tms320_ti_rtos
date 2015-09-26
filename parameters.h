@@ -38,7 +38,7 @@ typedef struct {
 }Parameter_type;
 
 
-extern Parameter_type ParametersTable[];
+extern const Parameter_type ParametersTable[];
 
 
 

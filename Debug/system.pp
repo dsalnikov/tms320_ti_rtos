@@ -20,6 +20,10 @@ system.obj: C:/Documents\ and\ Settings/salnikov/workspace_v6_1/tms320_ti_rtos/D
 system.obj: C:/Documents\ and\ Settings/salnikov/workspace_v6_1/tms320_ti_rtos/DSP2802x/inc/DSP2802x_Sci.h
 system.obj: C:/Documents\ and\ Settings/salnikov/workspace_v6_1/tms320_ti_rtos/DSP2802x/inc/DSP2802x_SysCtrl.h
 system.obj: C:/Documents\ and\ Settings/salnikov/workspace_v6_1/tms320_ti_rtos/DSP2802x/inc/DSP2802x_XIntrupt.h
+system.obj: ../iqmath/include/IQmathLib.h
+system.obj: C:/ti/ccsv6/tools/compiler/ti-cgt-c2000_6.4.6/include/limits.h
+system.obj: ../pwm.h
+system.obj: C:/Documents\ and\ Settings/salnikov/workspace_v6_1/tms320_ti_rtos/DSP2802x/inc/DSP2802x_EPwm_defines.h
 
 ../system.c: 
 ../system.h: 
@@ -41,3 +45,7 @@ C:/Documents\ and\ Settings/salnikov/workspace_v6_1/tms320_ti_rtos/DSP2802x/inc/
 C:/Documents\ and\ Settings/salnikov/workspace_v6_1/tms320_ti_rtos/DSP2802x/inc/DSP2802x_Sci.h: 
 C:/Documents\ and\ Settings/salnikov/workspace_v6_1/tms320_ti_rtos/DSP2802x/inc/DSP2802x_SysCtrl.h: 
 C:/Documents\ and\ Settings/salnikov/workspace_v6_1/tms320_ti_rtos/DSP2802x/inc/DSP2802x_XIntrupt.h: 
+../iqmath/include/IQmathLib.h: 
+C:/ti/ccsv6/tools/compiler/ti-cgt-c2000_6.4.6/include/limits.h: 
+../pwm.h: 
+C:/Documents\ and\ Settings/salnikov/workspace_v6_1/tms320_ti_rtos/DSP2802x/inc/DSP2802x_EPwm_defines.h: 

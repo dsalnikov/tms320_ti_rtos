@@ -13,6 +13,8 @@
 
 #include "iqmath/include/IQmathLib.h"
 
+#include "system.h"
+
 //timer period on 60MHz for 4kHz PWM
 #define PWM_TIMER_PRD 15000
 
@@ -38,6 +40,9 @@ void pwm1_interrupt_init();
 void pwm_it_enable();
 void pwm_it_disable();
 
+void pwm_on();
+void pwm_off();
+
 interrupt void epwm1_timer_isr();
 
 typedef struct {
@@ -47,6 +52,13 @@ typedef struct {
 
 	_iq angle_step;
 	_iq angle;
+
+	ThreePhase_t t;
+
+	//прошел период выходного напряжения
+	Uint16 period_out;
+	//разрешение расчета rms
+	Uint16 en_rms_calc;
 } pwm_t;
 
 extern pwm_t pwm;

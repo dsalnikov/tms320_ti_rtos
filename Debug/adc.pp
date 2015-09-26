@@ -209,7 +209,12 @@ adc.obj: C:/ti/tirtos_c2000_2_10_01_38/products/bios_6_41_00_26/packages/ti/sysb
 adc.obj: C:/ti/tirtos_c2000_2_10_01_38/products/bios_6_41_00_26/packages/ti/sysbios/knl/Task.h
 adc.obj: C:/ti/tirtos_c2000_2_10_01_38/products/bios_6_41_00_26/packages/ti/sysbios/hal/Hwi.h
 adc.obj: C:/ti/tirtos_c2000_2_10_01_38/products/bios_6_41_00_26/packages/ti/sysbios/hal/Hwi.h
+adc.obj: C:/ti/tirtos_c2000_2_10_01_38/products/bios_6_41_00_26/packages/ti/sysbios/knl/Semaphore.h
 adc.obj: ../system.h
+adc.obj: ../iqmath/include/IQmathLib.h
+adc.obj: C:/ti/ccsv6/tools/compiler/ti-cgt-c2000_6.4.6/include/limits.h
+adc.obj: ../pwm.h
+adc.obj: C:/Documents\ and\ Settings/salnikov/workspace_v6_1/tms320_ti_rtos/DSP2802x/inc/DSP2802x_EPwm_defines.h
 
 ../adc.c: 
 C:/Documents\ and\ Settings/salnikov/workspace_v6_1/tms320_ti_rtos/DSP2802x/inc/DSP2802x_Device.h: 
@@ -420,4 +425,9 @@ C:/ti/tirtos_c2000_2_10_01_38/products/bios_6_41_00_26/packages/ti/sysbios/hal/p
 C:/ti/tirtos_c2000_2_10_01_38/products/bios_6_41_00_26/packages/ti/sysbios/knl/Task.h: 
 C:/ti/tirtos_c2000_2_10_01_38/products/bios_6_41_00_26/packages/ti/sysbios/hal/Hwi.h: 
 C:/ti/tirtos_c2000_2_10_01_38/products/bios_6_41_00_26/packages/ti/sysbios/hal/Hwi.h: 
+C:/ti/tirtos_c2000_2_10_01_38/products/bios_6_41_00_26/packages/ti/sysbios/knl/Semaphore.h: 
 ../system.h: 
+../iqmath/include/IQmathLib.h: 
+C:/ti/ccsv6/tools/compiler/ti-cgt-c2000_6.4.6/include/limits.h: 
+../pwm.h: 
+C:/Documents\ and\ Settings/salnikov/workspace_v6_1/tms320_ti_rtos/DSP2802x/inc/DSP2802x_EPwm_defines.h: 

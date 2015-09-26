@@ -28,6 +28,9 @@ extern const ti_sysbios_hal_Hwi_Handle epwm1_hwi_handle;
 #include <ti/sysbios/hal/Hwi.h>
 extern const ti_sysbios_hal_Hwi_Handle adc_hwi_handle;
 
+#include <ti/sysbios/knl/Semaphore.h>
+extern const ti_sysbios_knl_Semaphore_Handle calculate_rms_sem;
+
 extern int xdc_runtime_Startup__EXECFXN__C;
 
 extern int xdc_runtime_Startup__RESETFXN__C;

@@ -24,6 +24,8 @@ modbus_slave.obj: ../crc16.h
 modbus_slave.obj: ../ParametersTable.h
 modbus_slave.obj: ../parameters.h
 modbus_slave.obj: ../system.h
+modbus_slave.obj: ../iqmath/include/IQmathLib.h
+modbus_slave.obj: C:/ti/ccsv6/tools/compiler/ti-cgt-c2000_6.4.6/include/limits.h
 
 ../modbus_slave.c: 
 ../modbus_slave.h: 
@@ -49,3 +51,5 @@ C:/Documents\ and\ Settings/salnikov/workspace_v6_1/tms320_ti_rtos/DSP2802x/inc/
 ../ParametersTable.h: 
 ../parameters.h: 
 ../system.h: 
+../iqmath/include/IQmathLib.h: 
+C:/ti/ccsv6/tools/compiler/ti-cgt-c2000_6.4.6/include/limits.h: 

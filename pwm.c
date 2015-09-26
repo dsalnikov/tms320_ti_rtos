@@ -8,31 +8,47 @@
 #include "pwm.h"
 #include <math.h>
 #include <xdc/cfg/global.h>
-
+#include "system.h"
 #include "scalar.h"
-
-#define M_PI 3.141592
-float64 pwma = 0.0;
-
-Uint16 NominalVoltage = 10;
-float32 Fpwm = 4000.0;
-float32 Fout = 0.0;
-float64 deltaPhase = 0.0f;
-float64 Ta, Tb, Tc;
-Uint16 MaxTimerValue = 0x000A;
-
+#include "fails_control.h"
 
 pwm_t pwm;
 
+#define DEBUG_BUFFER_SIZE 1024
+Uint16 debug_buffer[DEBUG_BUFFER_SIZE];
+Uint16 debug_i = 0;
+
 void epwm1_hwi(UArg arg)
 {
-	ScalarControl();
+	int32 tmp;
 
-/*
-  	EPwm1Regs.CMPA.half.CMPA = (Uint16)(Ta * MaxTimerValue);
-	EPwm2Regs.CMPA.half.CMPA = (Uint16)(Tb * MaxTimerValue);
-	EPwm3Regs.CMPA.half.CMPA = (Uint16)(Tc * MaxTimerValue);
-*/
+	system_fsm();
+	rate_generator();
+	ScalarControl();
+	fails_control();
+
+	tmp = (int32)(_IQtoIQ15(svgen_dq.Ta) * pwm.pwm_counter_max); //u
+	pwm.t.PhaseA = (tmp >> 16) + (pwm.pwm_counter_max >> 1);
+	EPwm1Regs.CMPA.half.CMPA = pwm.t.PhaseA;
+
+	debug_buffer[debug_i] = pwm.t.PhaseA;
+	if (debug_i >= DEBUG_BUFFER_SIZE)
+		debug_i = 0;
+	else
+		debug_i++;
+//	debug_i = (debug_i >= DEBUG_BUFFER_SIZE) ? 0 : debug_i + 1;
+
+	tmp = (int32)(_IQtoIQ15(svgen_dq.Tb) * pwm.pwm_counter_max); //u
+	pwm.t.PhaseB = (tmp >> 16) + (pwm.pwm_counter_max >> 1);
+	EPwm2Regs.CMPA.half.CMPA = pwm.t.PhaseB;
+
+	tmp = (int32)(_IQtoIQ15(svgen_dq.Tc) * pwm.pwm_counter_max); //u
+	pwm.t.PhaseC = (tmp >> 16) + (pwm.pwm_counter_max >> 1);
+	EPwm3Regs.CMPA.half.CMPA = pwm.t.PhaseC;
+
+
+	measure_high_freq();
+
 	// Clear INT flag for this timer
 	EPwm1Regs.ETCLR.bit.INT = 1;
 
@@ -73,6 +89,10 @@ void pwm_init()
 	// настраиваем GPIO для ШИМ
 	pwm_gpio_init();
 
+	system.bases.current = 15;
+	system.bases.voltage = 60;
+	system.bases.frequency = 100;
+
 	pwm.pwm_freq = PWM_FREQ;
 	pwm.pwm_period = _IQ(1.0)/pwm.pwm_freq;
 	pwm.pwm_counter_max = SYSTEM_FREQ_HZ / PWM_FREQ;
@@ -80,10 +100,25 @@ void pwm_init()
 	pwm.angle = _IQ(0);
 	pwm.angle_step = _IQmpy(_IQ(F_REF), pwm.pwm_period);
 
+	system.Tacc = _IQ(10);
+	system.Fref = _IQ(50);
+	system.Uref = _IQ(20);
+
+	system.uf.U[0] = 0;
+	system.uf.U[1] = system.Uref;
+	system.uf.F[0] = 0;
+	system.uf.F[1] = system.Fref;
+
+	system.Command = idle_command;
+	system.state = init_state;
+
 	pwm1_init();
 	pwm1_dead_band_configure();
 	pwm2_init();
 	pwm3_init();
+
+	pwm_off();
+//	pwm_on();
 
 	//TODO: configure as HWI
 	pwm1_interrupt_init();
@@ -221,4 +256,26 @@ void pwm_it_enable()
 void pwm_it_disable()
 {
 	EPwm1Regs.ETSEL.bit.INTEN = 0;
+}
+
+void pwm_on()
+{
+	system.pwm_on = 1;
+	EALLOW;
+	// Включить все модули
+	EPwm1Regs.TZCLR.all = 0xFF;
+	EPwm2Regs.TZCLR.all = 0xFF;
+	EPwm3Regs.TZCLR.all = 0xFF;
+	EDIS;
+}
+
+void pwm_off()
+{
+	system.pwm_on = 0;
+	EALLOW;
+	// Выключить все модули
+	EPwm1Regs.TZFRC.bit.OST = 1;
+	EPwm2Regs.TZFRC.bit.OST = 1;
+	EPwm3Regs.TZFRC.bit.OST = 1;
+	EDIS;
 }

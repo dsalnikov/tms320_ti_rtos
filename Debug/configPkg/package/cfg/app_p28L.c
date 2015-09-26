@@ -1406,7 +1406,7 @@ const __T1_ti_sysbios_knl_Idle_coreList ti_sysbios_knl_Idle_coreList__A[1];
  */
 
 /* Object__table__V */
-ti_sysbios_knl_Semaphore_Object__ ti_sysbios_knl_Semaphore_Object__table__V[1];
+ti_sysbios_knl_Semaphore_Object__ ti_sysbios_knl_Semaphore_Object__table__V[2];
 
 
 /*
@@ -1774,7 +1774,7 @@ typedef struct xdc_runtime_Text_Module_State__ {
 xdc_runtime_Text_Module_State__ xdc_runtime_Text_Module__state__V;
 
 /* --> xdc_runtime_Text_charTab__A */
-const __T1_xdc_runtime_Text_charTab xdc_runtime_Text_charTab__A[4786];
+const __T1_xdc_runtime_Text_charTab xdc_runtime_Text_charTab__A[4804];
 
 /* --> xdc_runtime_Text_nodeTab__A */
 const __T1_xdc_runtime_Text_nodeTab xdc_runtime_Text_nodeTab__A[41];
@@ -7146,7 +7146,7 @@ ti_sysbios_knl_Semaphore_Module__ ti_sysbios_knl_Semaphore_Module__root__V = {
 };
 
 /* Object__table__V */
-ti_sysbios_knl_Semaphore_Object__ ti_sysbios_knl_Semaphore_Object__table__V[1] = {
+ti_sysbios_knl_Semaphore_Object__ ti_sysbios_knl_Semaphore_Object__table__V[2] = {
     {/* instance#0 */
         0,  /* event */
         (xdc_UInt)0x1,  /* eventId */
@@ -7156,6 +7156,18 @@ ti_sysbios_knl_Semaphore_Object__ ti_sysbios_knl_Semaphore_Object__table__V[1] =
             {
                 ((ti_sysbios_knl_Queue_Elem*)((void*)&ti_sysbios_knl_Semaphore_Object__table__V[0].Object_field_pendQ.elem)),  /* next */
                 ((ti_sysbios_knl_Queue_Elem*)((void*)&ti_sysbios_knl_Semaphore_Object__table__V[0].Object_field_pendQ.elem)),  /* prev */
+            },  /* elem */
+        },  /* Object_field_pendQ */
+    },
+    {/* instance#1 */
+        0,  /* event */
+        (xdc_UInt)0x1,  /* eventId */
+        ti_sysbios_knl_Semaphore_Mode_BINARY,  /* mode */
+        (xdc_UInt16)0x0,  /* count */
+        {
+            {
+                ((ti_sysbios_knl_Queue_Elem*)((void*)&ti_sysbios_knl_Semaphore_Object__table__V[1].Object_field_pendQ.elem)),  /* next */
+                ((ti_sysbios_knl_Queue_Elem*)((void*)&ti_sysbios_knl_Semaphore_Object__table__V[1].Object_field_pendQ.elem)),  /* prev */
             },  /* elem */
         },  /* Object_field_pendQ */
     },
@@ -7324,7 +7336,7 @@ asm("	.clink ");
 asm("	.sect \"[1].econst:ti_sysbios_knl_Semaphore_Object__count__C\"");
 asm("	.clink ");
 
-__FAR__ const CT__ti_sysbios_knl_Semaphore_Object__count ti_sysbios_knl_Semaphore_Object__count__C = 1;
+__FAR__ const CT__ti_sysbios_knl_Semaphore_Object__count ti_sysbios_knl_Semaphore_Object__count__C = 2;
 
 /* Object__heap__C */
 #pragma DATA_SECTION(ti_sysbios_knl_Semaphore_Object__heap__C, ".econst:ti_sysbios_knl_Semaphore_Object__heap__C");
@@ -12729,7 +12741,7 @@ asm("	.clink ");
 asm("	.sect \"[1].econst:xdc_runtime_Text_charTab__A\"");
 asm("	.clink ");
 
-const __T1_xdc_runtime_Text_charTab xdc_runtime_Text_charTab__A[4786] = {
+const __T1_xdc_runtime_Text_charTab xdc_runtime_Text_charTab__A[4804] = {
     (xdc_Char)0x0,  /* [0] */
     (xdc_Char)0x41,  /* [1] */
     (xdc_Char)0x5f,  /* [2] */
@@ -17410,112 +17422,130 @@ const __T1_xdc_runtime_Text_charTab xdc_runtime_Text_charTab__A[4786] = {
     (xdc_Char)0x65,  /* [4677] */
     (xdc_Char)0x6d,  /* [4678] */
     (xdc_Char)0x0,  /* [4679] */
-    (xdc_Char)0x74,  /* [4680] */
+    (xdc_Char)0x63,  /* [4680] */
     (xdc_Char)0x61,  /* [4681] */
-    (xdc_Char)0x73,  /* [4682] */
-    (xdc_Char)0x6b,  /* [4683] */
-    (xdc_Char)0x30,  /* [4684] */
-    (xdc_Char)0x0,  /* [4685] */
-    (xdc_Char)0x64,  /* [4686] */
-    (xdc_Char)0x72,  /* [4687] */
-    (xdc_Char)0x76,  /* [4688] */
-    (xdc_Char)0x38,  /* [4689] */
-    (xdc_Char)0x33,  /* [4690] */
-    (xdc_Char)0x30,  /* [4691] */
-    (xdc_Char)0x31,  /* [4692] */
+    (xdc_Char)0x6c,  /* [4682] */
+    (xdc_Char)0x63,  /* [4683] */
+    (xdc_Char)0x75,  /* [4684] */
+    (xdc_Char)0x6c,  /* [4685] */
+    (xdc_Char)0x61,  /* [4686] */
+    (xdc_Char)0x74,  /* [4687] */
+    (xdc_Char)0x65,  /* [4688] */
+    (xdc_Char)0x5f,  /* [4689] */
+    (xdc_Char)0x72,  /* [4690] */
+    (xdc_Char)0x6d,  /* [4691] */
+    (xdc_Char)0x73,  /* [4692] */
     (xdc_Char)0x5f,  /* [4693] */
-    (xdc_Char)0x74,  /* [4694] */
-    (xdc_Char)0x61,  /* [4695] */
-    (xdc_Char)0x73,  /* [4696] */
-    (xdc_Char)0x6b,  /* [4697] */
-    (xdc_Char)0x5f,  /* [4698] */
-    (xdc_Char)0x68,  /* [4699] */
-    (xdc_Char)0x61,  /* [4700] */
-    (xdc_Char)0x6e,  /* [4701] */
-    (xdc_Char)0x64,  /* [4702] */
-    (xdc_Char)0x6c,  /* [4703] */
-    (xdc_Char)0x65,  /* [4704] */
-    (xdc_Char)0x0,  /* [4705] */
-    (xdc_Char)0x74,  /* [4706] */
-    (xdc_Char)0x69,  /* [4707] */
-    (xdc_Char)0x2e,  /* [4708] */
-    (xdc_Char)0x73,  /* [4709] */
-    (xdc_Char)0x79,  /* [4710] */
-    (xdc_Char)0x73,  /* [4711] */
-    (xdc_Char)0x62,  /* [4712] */
-    (xdc_Char)0x69,  /* [4713] */
-    (xdc_Char)0x6f,  /* [4714] */
-    (xdc_Char)0x73,  /* [4715] */
-    (xdc_Char)0x2e,  /* [4716] */
-    (xdc_Char)0x6b,  /* [4717] */
-    (xdc_Char)0x6e,  /* [4718] */
-    (xdc_Char)0x6c,  /* [4719] */
-    (xdc_Char)0x2e,  /* [4720] */
-    (xdc_Char)0x54,  /* [4721] */
-    (xdc_Char)0x61,  /* [4722] */
-    (xdc_Char)0x73,  /* [4723] */
-    (xdc_Char)0x6b,  /* [4724] */
-    (xdc_Char)0x2e,  /* [4725] */
-    (xdc_Char)0x49,  /* [4726] */
-    (xdc_Char)0x64,  /* [4727] */
-    (xdc_Char)0x6c,  /* [4728] */
-    (xdc_Char)0x65,  /* [4729] */
-    (xdc_Char)0x54,  /* [4730] */
-    (xdc_Char)0x61,  /* [4731] */
-    (xdc_Char)0x73,  /* [4732] */
-    (xdc_Char)0x6b,  /* [4733] */
-    (xdc_Char)0x0,  /* [4734] */
-    (xdc_Char)0x75,  /* [4735] */
-    (xdc_Char)0x61,  /* [4736] */
-    (xdc_Char)0x72,  /* [4737] */
-    (xdc_Char)0x74,  /* [4738] */
-    (xdc_Char)0x5f,  /* [4739] */
-    (xdc_Char)0x72,  /* [4740] */
-    (xdc_Char)0x78,  /* [4741] */
-    (xdc_Char)0x5f,  /* [4742] */
-    (xdc_Char)0x68,  /* [4743] */
-    (xdc_Char)0x77,  /* [4744] */
-    (xdc_Char)0x69,  /* [4745] */
-    (xdc_Char)0x5f,  /* [4746] */
-    (xdc_Char)0x68,  /* [4747] */
-    (xdc_Char)0x61,  /* [4748] */
-    (xdc_Char)0x6e,  /* [4749] */
-    (xdc_Char)0x64,  /* [4750] */
-    (xdc_Char)0x6c,  /* [4751] */
-    (xdc_Char)0x65,  /* [4752] */
-    (xdc_Char)0x0,  /* [4753] */
-    (xdc_Char)0x65,  /* [4754] */
-    (xdc_Char)0x70,  /* [4755] */
-    (xdc_Char)0x77,  /* [4756] */
-    (xdc_Char)0x6d,  /* [4757] */
-    (xdc_Char)0x31,  /* [4758] */
-    (xdc_Char)0x5f,  /* [4759] */
-    (xdc_Char)0x68,  /* [4760] */
-    (xdc_Char)0x77,  /* [4761] */
-    (xdc_Char)0x69,  /* [4762] */
-    (xdc_Char)0x5f,  /* [4763] */
-    (xdc_Char)0x68,  /* [4764] */
-    (xdc_Char)0x61,  /* [4765] */
-    (xdc_Char)0x6e,  /* [4766] */
-    (xdc_Char)0x64,  /* [4767] */
-    (xdc_Char)0x6c,  /* [4768] */
-    (xdc_Char)0x65,  /* [4769] */
-    (xdc_Char)0x0,  /* [4770] */
-    (xdc_Char)0x61,  /* [4771] */
-    (xdc_Char)0x64,  /* [4772] */
-    (xdc_Char)0x63,  /* [4773] */
-    (xdc_Char)0x5f,  /* [4774] */
-    (xdc_Char)0x68,  /* [4775] */
-    (xdc_Char)0x77,  /* [4776] */
-    (xdc_Char)0x69,  /* [4777] */
-    (xdc_Char)0x5f,  /* [4778] */
-    (xdc_Char)0x68,  /* [4779] */
-    (xdc_Char)0x61,  /* [4780] */
-    (xdc_Char)0x6e,  /* [4781] */
-    (xdc_Char)0x64,  /* [4782] */
-    (xdc_Char)0x6c,  /* [4783] */
-    (xdc_Char)0x65,  /* [4784] */
-    (xdc_Char)0x0,  /* [4785] */
+    (xdc_Char)0x73,  /* [4694] */
+    (xdc_Char)0x65,  /* [4695] */
+    (xdc_Char)0x6d,  /* [4696] */
+    (xdc_Char)0x0,  /* [4697] */
+    (xdc_Char)0x74,  /* [4698] */
+    (xdc_Char)0x61,  /* [4699] */
+    (xdc_Char)0x73,  /* [4700] */
+    (xdc_Char)0x6b,  /* [4701] */
+    (xdc_Char)0x30,  /* [4702] */
+    (xdc_Char)0x0,  /* [4703] */
+    (xdc_Char)0x64,  /* [4704] */
+    (xdc_Char)0x72,  /* [4705] */
+    (xdc_Char)0x76,  /* [4706] */
+    (xdc_Char)0x38,  /* [4707] */
+    (xdc_Char)0x33,  /* [4708] */
+    (xdc_Char)0x30,  /* [4709] */
+    (xdc_Char)0x31,  /* [4710] */
+    (xdc_Char)0x5f,  /* [4711] */
+    (xdc_Char)0x74,  /* [4712] */
+    (xdc_Char)0x61,  /* [4713] */
+    (xdc_Char)0x73,  /* [4714] */
+    (xdc_Char)0x6b,  /* [4715] */
+    (xdc_Char)0x5f,  /* [4716] */
+    (xdc_Char)0x68,  /* [4717] */
+    (xdc_Char)0x61,  /* [4718] */
+    (xdc_Char)0x6e,  /* [4719] */
+    (xdc_Char)0x64,  /* [4720] */
+    (xdc_Char)0x6c,  /* [4721] */
+    (xdc_Char)0x65,  /* [4722] */
+    (xdc_Char)0x0,  /* [4723] */
+    (xdc_Char)0x74,  /* [4724] */
+    (xdc_Char)0x69,  /* [4725] */
+    (xdc_Char)0x2e,  /* [4726] */
+    (xdc_Char)0x73,  /* [4727] */
+    (xdc_Char)0x79,  /* [4728] */
+    (xdc_Char)0x73,  /* [4729] */
+    (xdc_Char)0x62,  /* [4730] */
+    (xdc_Char)0x69,  /* [4731] */
+    (xdc_Char)0x6f,  /* [4732] */
+    (xdc_Char)0x73,  /* [4733] */
+    (xdc_Char)0x2e,  /* [4734] */
+    (xdc_Char)0x6b,  /* [4735] */
+    (xdc_Char)0x6e,  /* [4736] */
+    (xdc_Char)0x6c,  /* [4737] */
+    (xdc_Char)0x2e,  /* [4738] */
+    (xdc_Char)0x54,  /* [4739] */
+    (xdc_Char)0x61,  /* [4740] */
+    (xdc_Char)0x73,  /* [4741] */
+    (xdc_Char)0x6b,  /* [4742] */
+    (xdc_Char)0x2e,  /* [4743] */
+    (xdc_Char)0x49,  /* [4744] */
+    (xdc_Char)0x64,  /* [4745] */
+    (xdc_Char)0x6c,  /* [4746] */
+    (xdc_Char)0x65,  /* [4747] */
+    (xdc_Char)0x54,  /* [4748] */
+    (xdc_Char)0x61,  /* [4749] */
+    (xdc_Char)0x73,  /* [4750] */
+    (xdc_Char)0x6b,  /* [4751] */
+    (xdc_Char)0x0,  /* [4752] */
+    (xdc_Char)0x75,  /* [4753] */
+    (xdc_Char)0x61,  /* [4754] */
+    (xdc_Char)0x72,  /* [4755] */
+    (xdc_Char)0x74,  /* [4756] */
+    (xdc_Char)0x5f,  /* [4757] */
+    (xdc_Char)0x72,  /* [4758] */
+    (xdc_Char)0x78,  /* [4759] */
+    (xdc_Char)0x5f,  /* [4760] */
+    (xdc_Char)0x68,  /* [4761] */
+    (xdc_Char)0x77,  /* [4762] */
+    (xdc_Char)0x69,  /* [4763] */
+    (xdc_Char)0x5f,  /* [4764] */
+    (xdc_Char)0x68,  /* [4765] */
+    (xdc_Char)0x61,  /* [4766] */
+    (xdc_Char)0x6e,  /* [4767] */
+    (xdc_Char)0x64,  /* [4768] */
+    (xdc_Char)0x6c,  /* [4769] */
+    (xdc_Char)0x65,  /* [4770] */
+    (xdc_Char)0x0,  /* [4771] */
+    (xdc_Char)0x65,  /* [4772] */
+    (xdc_Char)0x70,  /* [4773] */
+    (xdc_Char)0x77,  /* [4774] */
+    (xdc_Char)0x6d,  /* [4775] */
+    (xdc_Char)0x31,  /* [4776] */
+    (xdc_Char)0x5f,  /* [4777] */
+    (xdc_Char)0x68,  /* [4778] */
+    (xdc_Char)0x77,  /* [4779] */
+    (xdc_Char)0x69,  /* [4780] */
+    (xdc_Char)0x5f,  /* [4781] */
+    (xdc_Char)0x68,  /* [4782] */
+    (xdc_Char)0x61,  /* [4783] */
+    (xdc_Char)0x6e,  /* [4784] */
+    (xdc_Char)0x64,  /* [4785] */
+    (xdc_Char)0x6c,  /* [4786] */
+    (xdc_Char)0x65,  /* [4787] */
+    (xdc_Char)0x0,  /* [4788] */
+    (xdc_Char)0x61,  /* [4789] */
+    (xdc_Char)0x64,  /* [4790] */
+    (xdc_Char)0x63,  /* [4791] */
+    (xdc_Char)0x5f,  /* [4792] */
+    (xdc_Char)0x68,  /* [4793] */
+    (xdc_Char)0x77,  /* [4794] */
+    (xdc_Char)0x69,  /* [4795] */
+    (xdc_Char)0x5f,  /* [4796] */
+    (xdc_Char)0x68,  /* [4797] */
+    (xdc_Char)0x61,  /* [4798] */
+    (xdc_Char)0x6e,  /* [4799] */
+    (xdc_Char)0x64,  /* [4800] */
+    (xdc_Char)0x6c,  /* [4801] */
+    (xdc_Char)0x65,  /* [4802] */
+    (xdc_Char)0x0,  /* [4803] */
 };
 
 /* --> xdc_runtime_Text_nodeTab__A */
@@ -17967,7 +17997,7 @@ asm("	.clink ");
 asm("	.sect \"[1].econst:xdc_runtime_Text_charCnt__C\"");
 asm("	.clink ");
 
-__FAR__ const CT__xdc_runtime_Text_charCnt xdc_runtime_Text_charCnt__C = (xdc_Int16)0x12b2;
+__FAR__ const CT__xdc_runtime_Text_charCnt xdc_runtime_Text_charCnt__C = (xdc_Int16)0x12c4;
 
 /* nodeCnt__C */
 #pragma DATA_SECTION(xdc_runtime_Text_nodeCnt__C, ".econst:xdc_runtime_Text_nodeCnt__C");
@@ -22817,4 +22847,11 @@ const ti_sysbios_hal_Hwi_Handle epwm1_hwi_handle = (ti_sysbios_hal_Hwi_Handle)((
 #endif
 #endif
 const ti_sysbios_hal_Hwi_Handle adc_hwi_handle = (ti_sysbios_hal_Hwi_Handle)((ti_sysbios_hal_Hwi_Handle)&ti_sysbios_hal_Hwi_Object__table__V[2]);
+
+#ifdef __GNUC__
+#ifndef __TI_COMPILER_VERSION__
+    __attribute__ ((externally_visible))
+#endif
+#endif
+const ti_sysbios_knl_Semaphore_Handle calculate_rms_sem = (ti_sysbios_knl_Semaphore_Handle)((ti_sysbios_knl_Semaphore_Handle)&ti_sysbios_knl_Semaphore_Object__table__V[1]);
 

@@ -15,6 +15,11 @@ void init_adc();
 
 void adc_isr(UArg arg);
 
+void InitAdc(void);
+
+
+void measure_high_freq();
+void calculate_rms();
 
 
 #endif /* ADC_H_ */
