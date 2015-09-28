@@ -117,7 +117,8 @@ SECTIONS
     .args               : > FLASH       PAGE = 0
 
     /* Allocate IQ math areas: */
-    IQmath              : > FLASH       PAGE = 0            /* Math Code */
+    //IQmath              : > FLASH       PAGE = 0            /* Math Code */
+    IQmath              : > M01SARAM | L0SARAM       PAGE = 1            /* Math Code */
     IQmathTables        : > IQTABLES    PAGE = 0, TYPE = NOLOAD
 
     /*

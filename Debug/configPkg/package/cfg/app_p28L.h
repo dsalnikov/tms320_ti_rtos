@@ -23,9 +23,6 @@ extern const ti_sysbios_hal_Timer_Handle modbus_timer;
 extern const ti_sysbios_knl_Task_Handle drv8301_task_handle;
 
 #include <ti/sysbios/hal/Hwi.h>
-extern const ti_sysbios_hal_Hwi_Handle epwm1_hwi_handle;
-
-#include <ti/sysbios/hal/Hwi.h>
 extern const ti_sysbios_hal_Hwi_Handle adc_hwi_handle;
 
 #include <ti/sysbios/knl/Semaphore.h>

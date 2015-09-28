@@ -72,28 +72,53 @@ void init_adc()
 }
 
 #define ADC_OFFSET 2048
-#define ADC_MAX_VALUE (4095/2)
+//_IQ15(2048)
+#define ADC_MAX_VALUE 4095
 
-inline _iq get_adc_data(Uint16 value, _iq base)
-{
-	return _IQmpy(_IQ((value - ADC_OFFSET)/ADC_MAX_VALUE), base);
-}
+#define ADC_V 192
+//_IQ15(24.0/4095.0)
+#define ADC_C 264
+//_IQ15(33.0/4095.0)
+
+//inline _iq get_adc_data(Uint16 value, _iq base)
+//{
+////	return _IQ((float32)(value - ADC_OFFSET)/ADC_MAX_VALUE) * base;
+//	return _IQ15toIQ(_IQ15mpy(_IQ15(value) - ADC_OFFSET, ADC_K));
+//}
+#define get_adc_voltage(value) _IQ15toIQ(_IQ15mpy((_iq15)((int16_t)value - (int16_t)ADC_OFFSET) << 15, ADC_V))
+#define get_adc_current(value) _IQ15toIQ(_IQ15mpy((_iq15)((int16_t)value - (int16_t)ADC_OFFSET) << 15, ADC_C))
+
+#pragma CODE_SECTION( adc_isr, "ramfuncs")
+
+uint16_t adc_value = 0;
 
 void adc_isr(UArg arg)
 {
-	//TODO: create some filter here
-	system.current.PhaseA = get_adc_data(AdcResult.ADCRESULT0, system.bases.current);
-	system.current.PhaseB = get_adc_data(AdcResult.ADCRESULT1, system.bases.current);
-	system.current.PhaseC = get_adc_data(AdcResult.ADCRESULT2, system.bases.current);
+	GpioDataRegs.GPASET.bit.GPIO0 = 1;
 
-	system.voltage.PhaseA = get_adc_data(AdcResult.ADCRESULT3, system.bases.voltage);
-	system.voltage.PhaseB = get_adc_data(AdcResult.ADCRESULT4, system.bases.voltage);
-	system.voltage.PhaseC = get_adc_data(AdcResult.ADCRESULT5, system.bases.voltage);
+//	IQThreePhase_t *c;
+//
+//	c = &system.current;
+//
+//	//TODO: create some filter here
+	system.current.PhaseA = get_adc_current(adc_value);//AdcResult.ADCRESULT0);
+	//get_adc_current(AdcResult.ADCRESULT0);
+	system.current.PhaseB = get_adc_current(AdcResult.ADCRESULT1);
+	system.current.PhaseC = get_adc_current(AdcResult.ADCRESULT2);
+//
+//	c = &system.voltage;
+//
+	system.voltage.PhaseA = get_adc_voltage(AdcResult.ADCRESULT3);
+	system.voltage.PhaseB = get_adc_voltage(AdcResult.ADCRESULT4);
+	system.voltage.PhaseC = get_adc_voltage(AdcResult.ADCRESULT5);
 
-	system.Udc = get_adc_data(AdcResult.ADCRESULT6, system.bases.voltage);
+	system.Udc = _IQ15toIQ(_IQ15mpy( (_iq15)AdcResult.ADCRESULT6 << 15, ADC_V));
 
 	AdcRegs.ADCINTFLGCLR.bit.ADCINT1 = 1;	  //Clear ADCINT1 flag reinitialize for next SOC
 	PieCtrlRegs.PIEACK.all = PIEACK_GROUP1;   // Acknowledge interrupt to PIE
+
+	GpioDataRegs.GPACLEAR.bit.GPIO0 = 1;
+
 }
 
 void measure_high_freq()
@@ -127,12 +152,12 @@ void calculate_rms()
 
 	if (pwm.en_rms_calc && system.rms_samples_number_copy > 0)
 	{
-		tmp = sqrt(system.rms_copy.PhaseA / system.rms_samples_number_copy);
-		system.rms_current.PhaseA = get_adc_data(tmp, system.bases.current);
-		tmp = sqrt(system.rms_copy.PhaseB / system.rms_samples_number_copy);
-		system.rms_current.PhaseB = get_adc_data(tmp, system.bases.current);
-		tmp = sqrt(system.rms_copy.PhaseC / system.rms_samples_number_copy);
-		system.rms_current.PhaseC = get_adc_data(tmp, system.bases.current);
+//		tmp = sqrt(system.rms_copy.PhaseA / system.rms_samples_number_copy);
+//		system.rms_current.PhaseA = get_adc_data(tmp, system.bases.current);
+//		tmp = sqrt(system.rms_copy.PhaseB / system.rms_samples_number_copy);
+//		system.rms_current.PhaseB = get_adc_data(tmp, system.bases.current);
+//		tmp = sqrt(system.rms_copy.PhaseC / system.rms_samples_number_copy);
+//		system.rms_current.PhaseC = get_adc_data(tmp, system.bases.current);
 	}
 }
 

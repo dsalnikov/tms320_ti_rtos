@@ -208,7 +208,6 @@ adc.obj: C:/ti/tirtos_c2000_2_10_01_38/products/bios_6_41_00_26/packages/ti/sysb
 adc.obj: C:/ti/tirtos_c2000_2_10_01_38/products/bios_6_41_00_26/packages/ti/sysbios/hal/package/Timer_TimerProxy.h
 adc.obj: C:/ti/tirtos_c2000_2_10_01_38/products/bios_6_41_00_26/packages/ti/sysbios/knl/Task.h
 adc.obj: C:/ti/tirtos_c2000_2_10_01_38/products/bios_6_41_00_26/packages/ti/sysbios/hal/Hwi.h
-adc.obj: C:/ti/tirtos_c2000_2_10_01_38/products/bios_6_41_00_26/packages/ti/sysbios/hal/Hwi.h
 adc.obj: C:/ti/tirtos_c2000_2_10_01_38/products/bios_6_41_00_26/packages/ti/sysbios/knl/Semaphore.h
 adc.obj: ../system.h
 adc.obj: ../iqmath/include/IQmathLib.h
@@ -423,7 +422,6 @@ C:/ti/xdctools_3_30_03_47_core/packages/xdc/runtime/IInstance.h:
 C:/ti/tirtos_c2000_2_10_01_38/products/bios_6_41_00_26/packages/ti/sysbios/interfaces/ITimer.h: 
 C:/ti/tirtos_c2000_2_10_01_38/products/bios_6_41_00_26/packages/ti/sysbios/hal/package/Timer_TimerProxy.h: 
 C:/ti/tirtos_c2000_2_10_01_38/products/bios_6_41_00_26/packages/ti/sysbios/knl/Task.h: 
-C:/ti/tirtos_c2000_2_10_01_38/products/bios_6_41_00_26/packages/ti/sysbios/hal/Hwi.h: 
 C:/ti/tirtos_c2000_2_10_01_38/products/bios_6_41_00_26/packages/ti/sysbios/hal/Hwi.h: 
 C:/ti/tirtos_c2000_2_10_01_38/products/bios_6_41_00_26/packages/ti/sysbios/knl/Semaphore.h: 
 ../system.h: 

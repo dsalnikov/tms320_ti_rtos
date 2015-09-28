@@ -70,8 +70,8 @@ typedef struct {
 	Uint16 Status;
 	Uint16 LastFault;
 	_iq Udc;
-	ThreePhase_t current;
-	ThreePhase_t voltage;
+	IQThreePhase_t current;
+	IQThreePhase_t voltage;
 
 	Int32ThreePhase_t rms_accumulation;
 	Int32ThreePhase_t rms_copy;

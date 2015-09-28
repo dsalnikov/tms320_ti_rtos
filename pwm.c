@@ -18,42 +18,46 @@ pwm_t pwm;
 Uint16 debug_buffer[DEBUG_BUFFER_SIZE];
 Uint16 debug_i = 0;
 
-void epwm1_hwi(UArg arg)
-{
+#pragma CODE_SECTION( epwm1_timer_isr, "ramfuncs")
+void epwm1_timer_isr(){
 	int32 tmp;
 
-	system_fsm();
-	rate_generator();
-	ScalarControl();
-	fails_control();
 
-	tmp = (int32)(_IQtoIQ15(svgen_dq.Ta) * pwm.pwm_counter_max); //u
-	pwm.t.PhaseA = (tmp >> 16) + (pwm.pwm_counter_max >> 1);
-	EPwm1Regs.CMPA.half.CMPA = pwm.t.PhaseA;
+	EPwm1Regs.CMPA.half.CMPA = 7500;
+//	system_fsm();
+//	rate_generator();
+//	ScalarControl();
+//	fails_control();
 
-	debug_buffer[debug_i] = pwm.t.PhaseA;
-	if (debug_i >= DEBUG_BUFFER_SIZE)
-		debug_i = 0;
-	else
-		debug_i++;
-//	debug_i = (debug_i >= DEBUG_BUFFER_SIZE) ? 0 : debug_i + 1;
-
-	tmp = (int32)(_IQtoIQ15(svgen_dq.Tb) * pwm.pwm_counter_max); //u
-	pwm.t.PhaseB = (tmp >> 16) + (pwm.pwm_counter_max >> 1);
-	EPwm2Regs.CMPA.half.CMPA = pwm.t.PhaseB;
-
-	tmp = (int32)(_IQtoIQ15(svgen_dq.Tc) * pwm.pwm_counter_max); //u
-	pwm.t.PhaseC = (tmp >> 16) + (pwm.pwm_counter_max >> 1);
-	EPwm3Regs.CMPA.half.CMPA = pwm.t.PhaseC;
-
-
-	measure_high_freq();
+//	tmp = (int32)(_IQtoIQ15(svgen_dq.Ta) * pwm.pwm_counter_max); //u
+//	pwm.t.PhaseA = (tmp >> 16) + (pwm.pwm_counter_max >> 1);
+//	EPwm1Regs.CMPA.half.CMPA = pwm.t.PhaseA;
+//
+//	debug_buffer[debug_i] = pwm.t.PhaseA;
+//	if (debug_i >= DEBUG_BUFFER_SIZE)
+//		debug_i = 0;
+//	else
+//		debug_i++;
+////	debug_i = (debug_i >= DEBUG_BUFFER_SIZE) ? 0 : debug_i + 1;
+//
+//	tmp = (int32)(_IQtoIQ15(svgen_dq.Tb) * pwm.pwm_counter_max); //u
+//	pwm.t.PhaseB = (tmp >> 16) + (pwm.pwm_counter_max >> 1);
+//	EPwm2Regs.CMPA.half.CMPA = pwm.t.PhaseB;
+//
+//	tmp = (int32)(_IQtoIQ15(svgen_dq.Tc) * pwm.pwm_counter_max); //u
+//	pwm.t.PhaseC = (tmp >> 16) + (pwm.pwm_counter_max >> 1);
+//	EPwm3Regs.CMPA.half.CMPA = pwm.t.PhaseC;
+//
+//
+//	measure_high_freq();
 
 	// Clear INT flag for this timer
 	EPwm1Regs.ETCLR.bit.INT = 1;
 
 	// Acknowledge this interrupt to receive more interrupts from group 3
 	PieCtrlRegs.PIEACK.all = PIEACK_GROUP3;
+
+
 }
 
 void pwm_gpio_init()
@@ -69,7 +73,8 @@ void pwm_gpio_init()
 	GpioCtrlRegs.GPAPUD.bit.GPIO5 = 1;
 
 	// Настраиваем мультиплексоры PWM
-	GpioCtrlRegs.GPAMUX1.bit.GPIO0 = 1;  // epwm1a
+	GpioCtrlRegs.GPADIR.bit.GPIO0 = 1;
+	GpioCtrlRegs.GPAMUX1.bit.GPIO0 = 0;//1;  // epwm1a
 	GpioCtrlRegs.GPAMUX1.bit.GPIO1 = 1;	 // epwm1b
 	GpioCtrlRegs.GPAMUX1.bit.GPIO2 = 1;	 // epwm2a
 	GpioCtrlRegs.GPAMUX1.bit.GPIO3 = 1;	 // epwm2b
@@ -90,7 +95,7 @@ void pwm_init()
 	pwm_gpio_init();
 
 	system.bases.current = 15;
-	system.bases.voltage = 60;
+	system.bases.voltage = 24;
 	system.bases.frequency = 100;
 
 	pwm.pwm_freq = PWM_FREQ;
@@ -230,7 +235,7 @@ void pwm3_init()
 void pwm1_interrupt_init()
 {
 	EALLOW;  // This is needed to write to EALLOW protected registers
-	//PieVectTable.EPWM1_INT = &epwm1_timer_isr;
+	PieVectTable.EPWM1_INT = &epwm1_timer_isr;
 	EDIS;
 
 	IER |= M_INT3;

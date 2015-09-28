@@ -190,7 +190,6 @@ drv8301.obj: C:/ti/tirtos_c2000_2_10_01_38/products/bios_6_41_00_26/packages/ti/
 drv8301.obj: C:/ti/tirtos_c2000_2_10_01_38/products/bios_6_41_00_26/packages/ti/sysbios/hal/package/Timer_TimerProxy.h
 drv8301.obj: C:/ti/tirtos_c2000_2_10_01_38/products/bios_6_41_00_26/packages/ti/sysbios/knl/Task.h
 drv8301.obj: C:/ti/tirtos_c2000_2_10_01_38/products/bios_6_41_00_26/packages/ti/sysbios/hal/Hwi.h
-drv8301.obj: C:/ti/tirtos_c2000_2_10_01_38/products/bios_6_41_00_26/packages/ti/sysbios/hal/Hwi.h
 drv8301.obj: C:/ti/tirtos_c2000_2_10_01_38/products/bios_6_41_00_26/packages/ti/sysbios/knl/Semaphore.h
 drv8301.obj: ../pwm.h
 drv8301.obj: C:/Documents\ and\ Settings/salnikov/workspace_v6_1/tms320_ti_rtos/DSP2802x/inc/DSP2802x_Device.h
@@ -412,7 +411,6 @@ C:/ti/xdctools_3_30_03_47_core/packages/xdc/runtime/IInstance.h:
 C:/ti/tirtos_c2000_2_10_01_38/products/bios_6_41_00_26/packages/ti/sysbios/interfaces/ITimer.h: 
 C:/ti/tirtos_c2000_2_10_01_38/products/bios_6_41_00_26/packages/ti/sysbios/hal/package/Timer_TimerProxy.h: 
 C:/ti/tirtos_c2000_2_10_01_38/products/bios_6_41_00_26/packages/ti/sysbios/knl/Task.h: 
-C:/ti/tirtos_c2000_2_10_01_38/products/bios_6_41_00_26/packages/ti/sysbios/hal/Hwi.h: 
 C:/ti/tirtos_c2000_2_10_01_38/products/bios_6_41_00_26/packages/ti/sysbios/hal/Hwi.h: 
 C:/ti/tirtos_c2000_2_10_01_38/products/bios_6_41_00_26/packages/ti/sysbios/knl/Semaphore.h: 
 ../pwm.h: 

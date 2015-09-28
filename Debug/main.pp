@@ -224,7 +224,6 @@ main.obj: C:/ti/tirtos_c2000_2_10_01_38/products/bios_6_41_00_26/packages/ti/sys
 main.obj: C:/ti/tirtos_c2000_2_10_01_38/products/bios_6_41_00_26/packages/ti/sysbios/hal/package/Timer_TimerProxy.h
 main.obj: C:/ti/tirtos_c2000_2_10_01_38/products/bios_6_41_00_26/packages/ti/sysbios/knl/Task.h
 main.obj: C:/ti/tirtos_c2000_2_10_01_38/products/bios_6_41_00_26/packages/ti/sysbios/hal/Hwi.h
-main.obj: C:/ti/tirtos_c2000_2_10_01_38/products/bios_6_41_00_26/packages/ti/sysbios/hal/Hwi.h
 main.obj: C:/ti/tirtos_c2000_2_10_01_38/products/bios_6_41_00_26/packages/ti/sysbios/knl/Semaphore.h
 main.obj: ../Uart.h
 main.obj: ../pwm.h
@@ -457,7 +456,6 @@ C:/ti/xdctools_3_30_03_47_core/packages/xdc/runtime/IInstance.h:
 C:/ti/tirtos_c2000_2_10_01_38/products/bios_6_41_00_26/packages/ti/sysbios/interfaces/ITimer.h: 
 C:/ti/tirtos_c2000_2_10_01_38/products/bios_6_41_00_26/packages/ti/sysbios/hal/package/Timer_TimerProxy.h: 
 C:/ti/tirtos_c2000_2_10_01_38/products/bios_6_41_00_26/packages/ti/sysbios/knl/Task.h: 
-C:/ti/tirtos_c2000_2_10_01_38/products/bios_6_41_00_26/packages/ti/sysbios/hal/Hwi.h: 
 C:/ti/tirtos_c2000_2_10_01_38/products/bios_6_41_00_26/packages/ti/sysbios/hal/Hwi.h: 
 C:/ti/tirtos_c2000_2_10_01_38/products/bios_6_41_00_26/packages/ti/sysbios/knl/Semaphore.h: 
 ../Uart.h: 
