@@ -16,14 +16,23 @@
 
 
 /*
- *  ======== taskFxn ========
+ *  ======== main_task_function ========
  */
-Void taskFxn(UArg a0, UArg a1)
+Void main_task_function(UArg a0, UArg a1)
 {
+
+    pwm_init();
+
 	while(1)
 	{
-		//TODO: generate frequensy setting here
-		Task_sleep(100);
+	    if (Semaphore_pend(calculate_rms_sem, 100))
+	    {
+	        calculate_rms();
+	    }
+//	    else
+//	    {
+//	        Task_sleep(100);
+//	    }
 	}
 }
 

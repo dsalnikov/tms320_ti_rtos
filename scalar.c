@@ -4,7 +4,7 @@
 SVGENDQ svgen_dq = SVGENDQ_DEFAULTS;
 
 
-void ScalarControl(void)
+void scalar_control(void)
 {
 	_iq Ds, Udc, angle;
 	_iq sin, cos;
@@ -78,16 +78,20 @@ void ScalarControl(void)
 #endif
 }
 
+#pragma CODE_SECTION( rate_generator, "ramfuncs")
+
 void rate_generator()
 {
 	static _iq time = 0;
-	_iq f;
+	_iq f, tmp;
 
 	if (system.state == running_state)
 	{
 		if (time < system.Tacc)
 		{
-			f = _IQmpy(_IQdiv(system.Fref, system.Tacc), time);
+		    //TODO: move division to initialisation
+		    tmp = _IQdiv(system.Fref, system.Tacc);
+			f = _IQmpy(tmp, time);
 			system.Fout = f;
 			time += pwm.pwm_period;
 

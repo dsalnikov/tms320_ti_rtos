@@ -18,9 +18,9 @@ typedef struct {
 } ThreePhase_t;
 
 typedef struct {
-	_iq PhaseA;
-	_iq PhaseB;
-	_iq PhaseC;
+	_iq15 PhaseA;
+	_iq15 PhaseB;
+	_iq15 PhaseC;
 } IQThreePhase_t;
 
 typedef struct {
@@ -43,15 +43,16 @@ typedef struct {
 
 typedef enum {
 	init_state = 0,
-	error_state,
+	fail_state,
 	ready_state,
 	running_state,
 } System_state_t;
 
 typedef enum {
-	idle_command = 0,
+	no_command = 0,
 	start_command = 1,
 	stop_command = 2,
+	reset_command = 3
 } System_command_t;
 
 typedef struct {
@@ -69,7 +70,10 @@ typedef struct {
 	System_command_t Command;
 	Uint16 Status;
 	Uint16 LastFault;
-	_iq Udc;
+	_iq15 Udc;
+	Int32ThreePhase_t adc_current;
+    Int32ThreePhase_t adc_voltage;
+
 	IQThreePhase_t current;
 	IQThreePhase_t voltage;
 
@@ -78,7 +82,7 @@ typedef struct {
 	Uint16 rms_samples_number;
 	Uint16 rms_samples_number_copy;
 
-	ThreePhase_t rms_current;
+	IQThreePhase_t rms_current;
 
 	Uint16 pwm_on;
 

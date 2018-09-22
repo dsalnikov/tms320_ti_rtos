@@ -13,16 +13,16 @@
 // тестовая таблица параметров
 const Parameter_type ParametersTable[] =
 {
-	{&system.Fref,				0, 	0xFFFF, READ_PARAMETER_FLAG | WRITE_PARAMETER_FLAG	},
+	{(Uint16 *)&system.Fref,				0, 	0xFFFF, READ_PARAMETER_FLAG | WRITE_PARAMETER_FLAG	},
 	{&system.LastFault,			0, 	0xFFFF, READ_PARAMETER_FLAG							},
 	{&system.Status,			0, 	0xFFFF, READ_PARAMETER_FLAG  						},
-	{&system.current.PhaseA,	0, 	0xFFFF, READ_PARAMETER_FLAG  						},
-	{&system.current.PhaseB,	0, 	0xFFFF, READ_PARAMETER_FLAG  						},
-	{&system.current.PhaseC,	0, 	0xFFFF, READ_PARAMETER_FLAG  						},
-	{&system.Udc,				0, 	0xFFFF, READ_PARAMETER_FLAG  						},
-	{&system.voltage.PhaseA,	0, 	0xFFFF, READ_PARAMETER_FLAG  						},
-	{&system.voltage.PhaseB,	0, 	0xFFFF, READ_PARAMETER_FLAG  						},
-	{&system.voltage.PhaseC,	0, 	0xFFFF, READ_PARAMETER_FLAG  						},
+	{(Uint16 *)&system.current.PhaseA,	0, 	0xFFFF, READ_PARAMETER_FLAG  						},
+	{(Uint16 *)&system.current.PhaseB,	0, 	0xFFFF, READ_PARAMETER_FLAG  						},
+	{(Uint16 *)&system.current.PhaseC,	0, 	0xFFFF, READ_PARAMETER_FLAG  						},
+	{(Uint16 *)&system.Udc,				0, 	0xFFFF, READ_PARAMETER_FLAG  						},
+	{(Uint16 *)&system.voltage.PhaseA,	0, 	0xFFFF, READ_PARAMETER_FLAG  						},
+	{(Uint16 *)&system.voltage.PhaseB,	0, 	0xFFFF, READ_PARAMETER_FLAG  						},
+	{(Uint16 *)&system.voltage.PhaseC,	0, 	0xFFFF, READ_PARAMETER_FLAG  						},
 };
 
 // количество параметров

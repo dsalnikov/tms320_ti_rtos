@@ -16,7 +16,7 @@
 
 extern SVGENDQ svgen_dq;
 
-void ScalarControl(void);
+void scalar_control(void);
 void rate_generator();
 void uf_characteristics();
 

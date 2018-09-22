@@ -15,7 +15,7 @@ void system_fsm()
 	switch (system.state)
 	{
 		case init_state:
-			system.Command = idle_command;
+			system.Command = no_command;
 			pwm_off();
 			system.state = ready_state;
 		break;
@@ -27,7 +27,7 @@ void system_fsm()
 				pwm_on();
 				system.state = running_state;
 			}
-			system.Command = idle_command;
+			system.Command = no_command;
 		break;
 
 
@@ -35,14 +35,18 @@ void system_fsm()
 			if (system.Command == stop_command)
 			{
 				pwm_off();
-				system.state = ready_state;
+				system.state = init_state;
 			}
-			system.Command = idle_command;
+			system.Command = no_command;
 		break;
 
 
-		case error_state:
+		case fail_state:
 		default:
+		    if (system.Command == reset_command)
+		    {
+		        system.state = init_state;
+		    }
 
 		break;
 	}

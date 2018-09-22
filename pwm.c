@@ -14,31 +14,24 @@
 
 pwm_t pwm;
 
-#define DEBUG_BUFFER_SIZE 1024
-Uint16 debug_buffer[DEBUG_BUFFER_SIZE];
-Uint16 debug_i = 0;
+#include "debug.h"
 
 #pragma CODE_SECTION( epwm1_timer_isr, "ramfuncs")
-void epwm1_timer_isr(){
-	int32 tmp;
+void epwm1_timer_isr()
+{
+	//int32 tmp;
 
+	system_fsm();
+	rate_generator();
+	scalar_control();
 
-	EPwm1Regs.CMPA.half.CMPA = 7500;
-//	system_fsm();
-//	rate_generator();
-//	ScalarControl();
 //	fails_control();
+
+    debug_write(DEBUG_WR_ON_START, 100, svgen_dq.Ta);
 
 //	tmp = (int32)(_IQtoIQ15(svgen_dq.Ta) * pwm.pwm_counter_max); //u
 //	pwm.t.PhaseA = (tmp >> 16) + (pwm.pwm_counter_max >> 1);
 //	EPwm1Regs.CMPA.half.CMPA = pwm.t.PhaseA;
-//
-//	debug_buffer[debug_i] = pwm.t.PhaseA;
-//	if (debug_i >= DEBUG_BUFFER_SIZE)
-//		debug_i = 0;
-//	else
-//		debug_i++;
-////	debug_i = (debug_i >= DEBUG_BUFFER_SIZE) ? 0 : debug_i + 1;
 //
 //	tmp = (int32)(_IQtoIQ15(svgen_dq.Tb) * pwm.pwm_counter_max); //u
 //	pwm.t.PhaseB = (tmp >> 16) + (pwm.pwm_counter_max >> 1);
@@ -49,15 +42,12 @@ void epwm1_timer_isr(){
 //	EPwm3Regs.CMPA.half.CMPA = pwm.t.PhaseC;
 //
 //
-//	measure_high_freq();
+	measure_high_freq();
 
 	// Clear INT flag for this timer
 	EPwm1Regs.ETCLR.bit.INT = 1;
-
 	// Acknowledge this interrupt to receive more interrupts from group 3
 	PieCtrlRegs.PIEACK.all = PIEACK_GROUP3;
-
-
 }
 
 void pwm_gpio_init()
@@ -114,7 +104,7 @@ void pwm_init()
 	system.uf.F[0] = 0;
 	system.uf.F[1] = system.Fref;
 
-	system.Command = idle_command;
+	system.Command = no_command;
 	system.state = init_state;
 
 	pwm1_init();
@@ -123,7 +113,6 @@ void pwm_init()
 	pwm3_init();
 
 	pwm_off();
-//	pwm_on();
 
 	//TODO: configure as HWI
 	pwm1_interrupt_init();
@@ -155,7 +144,6 @@ void pwm1_init()
 	// Set actions
 	EPwm1Regs.AQCTLA.bit.ZRO = AQ_SET;
 	EPwm1Regs.AQCTLA.bit.CAU = AQ_CLEAR;
-
 }
 
 void pwm1_dead_band_configure()
@@ -175,7 +163,6 @@ void pwm1_disable()
 	EPwm1Regs.CMPB = 0;
 	EPwm1Regs.DBCTL.bit.IN_MODE = 1;
 }
-
 
 void pwm2_init()
 {
@@ -265,22 +252,22 @@ void pwm_it_disable()
 
 void pwm_on()
 {
-	system.pwm_on = 1;
 	EALLOW;
 	// Включить все модули
 	EPwm1Regs.TZCLR.all = 0xFF;
 	EPwm2Regs.TZCLR.all = 0xFF;
 	EPwm3Regs.TZCLR.all = 0xFF;
 	EDIS;
+    system.pwm_on = 1;
 }
 
 void pwm_off()
 {
-	system.pwm_on = 0;
 	EALLOW;
 	// Выключить все модули
 	EPwm1Regs.TZFRC.bit.OST = 1;
 	EPwm2Regs.TZFRC.bit.OST = 1;
 	EPwm3Regs.TZFRC.bit.OST = 1;
 	EDIS;
+    system.pwm_on = 0;
 }

@@ -9,6 +9,7 @@
 #include "system.h"
 #include "iqmath/include/IQmathLib.h"
 #include "pwm.h"
+#include "math.h"
 
 //TODO: remove this after parameters set/get functions implementation
 extern System_t system;
@@ -71,61 +72,44 @@ void init_adc()
 
 }
 
-#define ADC_OFFSET 2048
-//_IQ15(2048)
-#define ADC_MAX_VALUE 4095
+const long adc_bias = 2048;
 
-#define ADC_V 192
-//_IQ15(24.0/4095.0)
-#define ADC_C 264
-//_IQ15(33.0/4095.0)
-
-//inline _iq get_adc_data(Uint16 value, _iq base)
-//{
-////	return _IQ((float32)(value - ADC_OFFSET)/ADC_MAX_VALUE) * base;
-//	return _IQ15toIQ(_IQ15mpy(_IQ15(value) - ADC_OFFSET, ADC_K));
-//}
-#define get_adc_voltage(value) _IQ15toIQ(_IQ15mpy((_iq15)((int16_t)value - (int16_t)ADC_OFFSET) << 15, ADC_V))
-#define get_adc_current(value) _IQ15toIQ(_IQ15mpy((_iq15)((int16_t)value - (int16_t)ADC_OFFSET) << 15, ADC_C))
 
 #pragma CODE_SECTION( adc_isr, "ramfuncs")
-
-uint16_t adc_value = 0;
-
 void adc_isr(UArg arg)
 {
 	GpioDataRegs.GPASET.bit.GPIO0 = 1;
 
-//	IQThreePhase_t *c;
-//
-//	c = &system.current;
-//
-//	//TODO: create some filter here
-	system.current.PhaseA = get_adc_current(adc_value);//AdcResult.ADCRESULT0);
-	//get_adc_current(AdcResult.ADCRESULT0);
-	system.current.PhaseB = get_adc_current(AdcResult.ADCRESULT1);
-	system.current.PhaseC = get_adc_current(AdcResult.ADCRESULT2);
-//
-//	c = &system.voltage;
-//
-	system.voltage.PhaseA = get_adc_voltage(AdcResult.ADCRESULT3);
-	system.voltage.PhaseB = get_adc_voltage(AdcResult.ADCRESULT4);
-	system.voltage.PhaseC = get_adc_voltage(AdcResult.ADCRESULT5);
+	system.adc_current.PhaseA = (long)AdcResult.ADCRESULT0 - adc_bias;
+    system.adc_current.PhaseB = (long)AdcResult.ADCRESULT1 - adc_bias;
+    system.adc_current.PhaseC = (long)AdcResult.ADCRESULT2 - adc_bias;
 
-	system.Udc = _IQ15toIQ(_IQ15mpy( (_iq15)AdcResult.ADCRESULT6 << 15, ADC_V));
+    system.adc_voltage.PhaseA = (long)AdcResult.ADCRESULT3 - adc_bias;
+    system.adc_voltage.PhaseB = (long)AdcResult.ADCRESULT4 - adc_bias;
+    system.adc_voltage.PhaseC = (long)AdcResult.ADCRESULT5 - adc_bias;
+
+	//TODO: create some filter here
+	system.current.PhaseA = _IQ15mpy(system.adc_current.PhaseA<<4, _IQ15(3.));
+	system.current.PhaseB = _IQ15mpy(system.adc_current.PhaseB<<4, _IQ15(3.));
+	system.current.PhaseC = _IQ15mpy(system.adc_current.PhaseC<<4, _IQ15(3.));
+
+	system.voltage.PhaseA = _IQ15mpy(system.adc_voltage.PhaseA<<4, _IQ15(3.));
+	system.voltage.PhaseB = _IQ15mpy(system.adc_voltage.PhaseB<<4, _IQ15(3.));
+	system.voltage.PhaseC = _IQ15mpy(system.adc_voltage.PhaseC<<4, _IQ15(3.));
+
+//	system.Udc = conv_adc_val_to_iq15(AdcResult.ADCRESULT6, _IQ15(3.));
 
 	AdcRegs.ADCINTFLGCLR.bit.ADCINT1 = 1;	  //Clear ADCINT1 flag reinitialize for next SOC
 	PieCtrlRegs.PIEACK.all = PIEACK_GROUP1;   // Acknowledge interrupt to PIE
 
 	GpioDataRegs.GPACLEAR.bit.GPIO0 = 1;
-
 }
 
 void measure_high_freq()
 {
-	system.rms_accumulation.PhaseA += system.current.PhaseA * system.current.PhaseA;
-	system.rms_accumulation.PhaseB += system.current.PhaseB * system.current.PhaseB;
-	system.rms_accumulation.PhaseC += system.current.PhaseC * system.current.PhaseC;
+	system.rms_accumulation.PhaseA += system.adc_current.PhaseA * system.adc_current.PhaseA;
+	system.rms_accumulation.PhaseB += system.adc_current.PhaseB * system.adc_current.PhaseB;
+	system.rms_accumulation.PhaseC += system.adc_current.PhaseC * system.adc_current.PhaseC;
 
 	system.rms_samples_number++;
 
@@ -147,17 +131,18 @@ void measure_high_freq()
 
 void calculate_rms()
 {
-	_iq val;
-	Uint32 tmp;
+	long tmp;
 
 	if (pwm.en_rms_calc && system.rms_samples_number_copy > 0)
 	{
-//		tmp = sqrt(system.rms_copy.PhaseA / system.rms_samples_number_copy);
-//		system.rms_current.PhaseA = get_adc_data(tmp, system.bases.current);
-//		tmp = sqrt(system.rms_copy.PhaseB / system.rms_samples_number_copy);
-//		system.rms_current.PhaseB = get_adc_data(tmp, system.bases.current);
-//		tmp = sqrt(system.rms_copy.PhaseC / system.rms_samples_number_copy);
-//		system.rms_current.PhaseC = get_adc_data(tmp, system.bases.current);
+		tmp = sqrt(system.rms_copy.PhaseA / system.rms_samples_number_copy);
+		system.rms_current.PhaseA = _IQ15mpy((long)tmp<<4, _IQ15(3.));
+
+        tmp = sqrt(system.rms_copy.PhaseB / system.rms_samples_number_copy);
+        system.rms_current.PhaseB = _IQ15mpy((long)tmp<<4, _IQ15(3.));
+
+        tmp = sqrt(system.rms_copy.PhaseC / system.rms_samples_number_copy);
+        system.rms_current.PhaseC= _IQ15mpy((long)tmp<<4, _IQ15(3.));
 	}
 }
 
